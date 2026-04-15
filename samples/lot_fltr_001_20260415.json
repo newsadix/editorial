@@ -1,0 +1,1682 @@
+{
+  "fournisseur_id": "fltr-001",
+  "horodatage_soumission": "2026-04-15T12:56:21.166206+00:00",
+  "bits": [
+    {
+      "id": "bit-2026-04-15-001",
+      "type": "fait",
+      "contenu": "Indicator et Wired ont publié une cartographie collaborative documentant 88 incidents d'utilisation d'outils de génération de faux nus impliquant des mineurs dans les établissements scolaires, couvrant 28 pays.",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Cartographie collaborative de violences technologiques",
+      "acteurs": [
+        {
+          "nom": "Indicator",
+          "role": "sujet"
+        },
+        {
+          "nom": "Wired",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-002",
+      "type": "donnee",
+      "contenu": "Les 88 incidents documentés ont affecté plus de 640 enfants selon la cartographie Indicator-Wired. L'UNICEF estime que 1,2 million d'enfants dans 11 pays ont subi des violences par deepfakes sexuels non consentis.",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Ampleur du phénomène",
+      "acteurs": [
+        {
+          "nom": "UNICEF",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-003",
+      "type": "contexte",
+      "contenu": "Les outils de génération de faux nus sont déployés de manière croissante dans les environnements scolaires. Les administrateurs d'établissements et les forces de l'ordre signalent des difficultés pour réagir face à ces incidents.",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Démunie institutionnelle",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-004",
+      "type": "fait",
+      "contenu": "Meta a diffusé des publicités pour xjoy.ai, un outil de génération d'images intimes, au cours de la semaine de publication de la cartographie Indicator-Wired.",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Financement publicitaire des outils abusifs",
+      "acteurs": [
+        {
+          "nom": "Meta",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-005",
+      "type": "point_de_vue",
+      "contenu": "« Peu importe à quel point c'est difficile, parlez, s'il vous plaît allez à la police et déposez plainte. Je veux dire à chaque victime : Hé, tu n'es pas seule ! Aie le courage de faire quelque chose et de dire que ce qu'ils ont fait n'était pas bien, que je ne veux pas être traitée comme ça. C'est un crime ! »",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Témoignage de victime",
+      "acteurs": [
+        {
+          "nom": "Étudiante allemande",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-006",
+      "type": "contexte",
+      "contenu": "Les impacts psychosociaux documentés incluent l'isolement, la peur de se déplacer en public, et le repli social chez les victimes, notamment la perte d'interactions sociales antérieures.",
+      "sources": [
+        {
+          "nom": "indicator.media",
+          "type_source": "source_secondaire",
+          "url": "https://indicator.media/p/more-than-640-students-have-been-targeted-by-ai-nudifiers-across-28-countries",
+          "date_acces": "2026-04-15T12:55:40+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:27:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Conséquences psychologiques",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-007",
+      "type": "donnee",
+      "contenu": "Selon une étude menée entre 2022 et 2025 par des chercheurs de l'Imperial College London, Stanford University et l'Internet Archive, environ 35% de l'ensemble des nouveaux sites web sont soit générés par l'IA, soit assistés par l'IA.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Proportion de contenu généré par IA",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "source"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "source"
+        },
+        {
+          "nom": "Internet Archive",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-008",
+      "type": "donnee",
+      "contenu": "Le score de sentiment positif moyen des sites générés ou assistés par l'IA est 107% plus élevé que celui des sites non-IA.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Tonalité émotionnelle des contenus IA",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "source"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-009",
+      "type": "fait",
+      "contenu": "L'étude a testé quatre approches différentes de détection de l'IA avant de retenir les outils de Pangram Labs, qui ont produit les résultats les plus cohérents.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Méthodologie d'étude",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "sujet"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "sujet"
+        },
+        {
+          "nom": "Internet Archive",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-010",
+      "type": "donnee",
+      "contenu": "Les sites générés par l'IA affichent une similarité sémantique 33% plus élevée que les sites créés par des humains, indiquant une homogénéisation des idées.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Diversité idéologique",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "source"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-011",
+      "type": "fait",
+      "contenu": "L'étude a testé la théorie selon laquelle l'IA entraînerait une augmentation de la désinformation, mais l'analyse des preuves n'a pas soutenu cette hypothèse.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Hypothèses infirmées",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "sujet"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-012",
+      "type": "fait",
+      "contenu": "L'étude a testé l'hypothèse selon laquelle les contenus générés par l'IA contiendraient moins de liens externes et seraient stylistiquement plus génériques que les contenus humains, mais ces deux théories n'ont pas été confirmées par les preuves.",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Hypothèses infirmées",
+      "acteurs": [
+        {
+          "nom": "Imperial College London",
+          "role": "sujet"
+        },
+        {
+          "nom": "Stanford University",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-013",
+      "type": "point_de_vue",
+      "contenu": "« Il est intéressant de voir que les gens avaient tendance à s'attendre aux pires résultats. »",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Perception des impacts de l'IA",
+      "acteurs": [
+        {
+          "nom": "Maty Bohacek",
+          "role": "source",
+          "affiliation": "Stanford University"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-014",
+      "type": "point_de_vue",
+      "contenu": "« Tout le monde dans l'équipe s'attendait à [ce que le style d'écriture soit plus générique], mais nous n'avons tout simplement pas de preuves significatives pour cela. »",
+      "sources": [
+        {
+          "nom": "wired.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.wired.com/story/ai-slop-is-changing-the-internet-just-not-how-you-might-think/",
+          "date_acces": "2026-04-15T12:55:47+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T11:26:00.000Z",
+      "geo": "monde",
+      "pilier": "culture_arts_medias",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "AI-generated content",
+        "désinformation",
+        "factualité",
+        "IA générative",
+        "intégrité internet",
+        "étude quantifiée"
+      ],
+      "sous_theme": "Hypothèses infirmées",
+      "acteurs": [
+        {
+          "nom": "Maty Bohacek",
+          "role": "source",
+          "affiliation": "Stanford University"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-015",
+      "type": "fait",
+      "contenu": "Le Mexique a interdit l'utilisation de l'IA pour le doublage et l'utilisation non autorisée de voix par l'IA, suite à une campagne menée par des acteurs vocaux.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Régulation IA",
+      "acteurs": [
+        {
+          "nom": "Mexique",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-016",
+      "type": "donnee",
+      "contenu": "Environ 2 millions d'acteurs de doublage travaillent à temps plein ou partiel dans le monde et risquent de perdre leurs moyens de subsistance en raison de la technologie IA vocale.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Échelle du phénomène",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-018",
+      "type": "fait",
+      "contenu": "Amazon Prime a annoncé qu'il ajouterait du 'doublage assisté par IA' à des films et séries licenciés qui n'auraient pas été doublés autrement.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Stratégies des plateformes",
+      "acteurs": [
+        {
+          "nom": "Amazon Prime",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-019",
+      "type": "fait",
+      "contenu": "La Guilde des acteurs de l'écran et la Fédération américaine des artistes de la télévision et de la radio ont obtenu lors de leur grève de 2023 des protections contre l'IA, incluant le droit d'approuver l'usage de leurs voix.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Protections syndicales",
+      "acteurs": [
+        {
+          "nom": "Screen Actors Guild–American Federation of Television and Radio Artists",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-020",
+      "type": "contexte",
+      "contenu": "En Inde, les tribunaux ont reconnu que la voix d'une personne est 'une partie intrinsèque de leur identité et relève du droit à la vie privée', et que l'utilisation commerciale non autorisée peut violer les droits de la personnalité. Cependant, ces dispositions ne s'étendent pas pleinement à l'utilisation des données vocales pour l'entraînement des systèmes d'IA.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Cadre juridique",
+      "acteurs": [
+        {
+          "nom": "Tribunaux indiens",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-021",
+      "type": "point_de_vue",
+      "contenu": "« Nous rendons le contenu étranger brésilien avec nos spécificités brésiliennes ; avec l'IA, nous perdons cela. »",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Enjeux culturels",
+      "acteurs": [
+        {
+          "nom": "Fabio Azevedo",
+          "role": "source"
+        },
+        {
+          "nom": "Association brésilienne des professionnels du doublage",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-022",
+      "type": "point_de_vue",
+      "contenu": "« Avant, j'étais une voix ; maintenant, je dois dire que je suis une voix humaine pour me distinguer de l'IA. »",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Impact personnel",
+      "acteurs": [
+        {
+          "nom": "Ganessh Divekar",
+          "role": "source"
+        },
+        {
+          "nom": "Association des artistes vocaux d'Inde",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-024",
+      "type": "contexte",
+      "contenu": "Le clonage vocal permet que la texture de la voix d'un acteur soit utilisée pour la performance d'un autre, ce qui signifie que les professionnels pourraient ne plus être nécessaires au doublage dans différentes langues au-delà de fournir le matériel d'entraînement à l'IA.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Capacités technologiques",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-025",
+      "type": "fait",
+      "contenu": "En Corée du Sud, les acteurs vocaux ont proposé des clauses pour limiter l'utilisation de l'IA et protéger les voix de tous les citoyens contre l'entraînement non autorisé à l'IA et contre les abus criminels potentiels.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Protections proposées",
+      "acteurs": [
+        {
+          "nom": "Corée du Sud",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-026",
+      "type": "point_de_vue",
+      "contenu": "« Dans les pays comme le Brésil ou le Mexique, la culture orale est très forte, et il faut vraiment un humain pour traduire le contexte local. »",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Enjeux culturels",
+      "acteurs": [
+        {
+          "nom": "Rafael Grohmann",
+          "role": "source"
+        },
+        {
+          "nom": "Université de Toronto",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-027",
+      "type": "contexte",
+      "contenu": "Des associations d'acteurs vocaux dans le Sud global, contrairement aux syndicats d'Hollywood, manquent de pouvoir économique, de pouvoir discursif et de soutien institutionnel pour arrêter la production. Elles forment plutôt des collectifs et diffusent des manifestes pour intervenir sur l'utilisation, la gestion et le refus de l'IA générative sur leur lieu de travail.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Capacités d'action",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-028",
+      "type": "donnee",
+      "contenu": "Un chercheur a identifié plus de 100 mouvements de travailleurs créatifs dans environ 25 pays, dont la Turquie, l'Argentine, le Chili, l'Inde et la Corée du Sud, se mobilisant contre l'IA générative.",
+      "sources": [
+        {
+          "nom": "restofworld.org",
+          "type_source": "source_secondaire",
+          "url": "https://restofworld.org/2026/ai-voice-actors-hollywood-dubbing/?utm_source=rss&utm_medium=rss&utm_campaign=feeds",
+          "date_acces": "2026-04-15T12:56:01+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:58:00.000Z",
+      "geo": "monde",
+      "pilier": "societe_dynamiques_sociales",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [
+        "IA",
+        "travail",
+        "Hollywood",
+        "dubbing",
+        "cultures locales",
+        "résistance",
+        "solidarité",
+        "Brésil"
+      ],
+      "sous_theme": "Mobilisations globales",
+      "acteurs": [
+        {
+          "nom": "Rafael Grohmann",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-029",
+      "type": "fait",
+      "contenu": "En février 2019, environ 30 biologistes synthétiques et bioéthiciens réunis en Virginie du Nord ont recommandé au National Science Foundation de financer des projets de recherche sur les microbes miroir - des organismes dont les molécules biologiques seraient inversées par rapport à celles de la nature.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Lancementdu projet miroir",
+      "acteurs": [
+        {
+          "nom": "National Science Foundation",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-030",
+      "type": "fait",
+      "contenu": "En décembre 2024, plusieurs biologistes synthétiques impliqués dans la réunion de 2019 ont publié un article d'alerte dans la revue Science accompagné d'un rapport technique de 299 pages avertissant que les organismes miroir pourraient déclencher un événement catastrophique menaçant toute forme de vie terrestre.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Inversion scientifique",
+      "acteurs": [
+        {
+          "nom": "Science",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-031",
+      "type": "contexte",
+      "contenu": "La chiralité est une propriété fondamentale des molécules biologiques qui détermine leur orientation. Les systèmes immunitaires de tous les êtres vivants utilisent cette chiralité pour détecter et combattre les menaces. Un organisme miroir, dont les molécules auraient une chiralité inverse, échapperait à ces défenses immunitaires innées.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Mécanisme du risque",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-032",
+      "type": "contexte",
+      "contenu": "Entre 2019 et 2024, les progrès scientifiques se sont accélérés dans plusieurs disciplines connexes : les chimistes construisaient des macromolécules miroir de plus en plus grandes, les biologistes synthétiques créaient des composants cellulaires miroir (ADN, ARN, ribosomes), sans que ces communautés ne communiquent largement entre elles sur l'ampleur de leurs avancées respectives.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Fragmentation disciplinaire",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-033",
+      "type": "fait",
+      "contenu": "En février 2022, Kevin Esvelt, chercheur au MIT Media Lab, a décrit ses préoccupations concernant le risque des organismes miroir à David Relman, microbiologiste à l'Université Stanford. Relman a par la suite consulté des experts en écologie, microbiologie et immunologie pour évaluer la validité de cette inquiétude.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Escalade de l'alerte",
+      "acteurs": [
+        {
+          "nom": "Kevin Esvelt",
+          "role": "sujet"
+        },
+        {
+          "nom": "David Relman",
+          "role": "réacteur"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-034",
+      "type": "point_de_vue",
+      "contenu": "« Tout le monde - tout le monde - trouvait ça cool. C'était un projet incroyablement difficile qui nous apprendrait potentiellement de nouvelles choses sur la façon de concevoir et construire des cellules, ou sur l'origine de la vie sur Terre. »",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Enthousiasme initial",
+      "acteurs": [
+        {
+          "nom": "John Glass",
+          "role": "source",
+          "fonction": "biologiste synthétique, J. Craig Venter Institute"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-035",
+      "type": "point_de_vue",
+      "contenu": "« J'aurais aimé qu'un après-midi ensoleillé, autour d'un café, nous réalisions que le monde était sur le point de se terminer, mais ce n'est pas ce qui s'est passé. Je suis embarrassée d'admettre que je n'ai même pas été la première à soulever les risques. »",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Prise de conscience tardive",
+      "acteurs": [
+        {
+          "nom": "Kate Adamala",
+          "role": "source",
+          "fonction": "biologiste synthétique, Université du Minnesota"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-036",
+      "type": "point_de_vue",
+      "contenu": "« L'absence de détection immunitaire innée est une circonstance incroyablement dangereuse pour l'hôte. »",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Mécanisme du risque",
+      "acteurs": [
+        {
+          "nom": "Timothy Hand",
+          "role": "source",
+          "fonction": "immunologiste, Université de Pittsburgh"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-037",
+      "type": "fait",
+      "contenu": "L'UNESCO a recommandé un moratoire mondial de précaution sur la création de cellules miroir vivantes, et des organismes philanthropiques majeurs comme la Fondation Alfred P. Sloan ont annoncé qu'ils ne financeraient plus de recherches aboutissant à la création de microbes miroir.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Réponse institutionnelle",
+      "acteurs": [
+        {
+          "nom": "UNESCO",
+          "role": "sujet"
+        },
+        {
+          "nom": "Fondation Alfred P. Sloan",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-038",
+      "type": "point_de_vue",
+      "contenu": "« Si un mal doit être causé à l'espèce humaine, ce sujet se classe à la position 382 sur ma liste. »",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Voix dissidente",
+      "acteurs": [
+        {
+          "nom": "Andy Ellington",
+          "role": "source",
+          "fonction": "biotechnologue et biologiste synthétique, Université du Texas à Austin"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-039",
+      "type": "point_de_vue",
+      "contenu": "« Il est crucial de distinguer la biologie moléculaire en miroir de la vie en miroir. »",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Voix dissidente",
+      "acteurs": [
+        {
+          "nom": "Ting Zhu",
+          "role": "source",
+          "fonction": "biologiste moléculaire, Université de Westlake"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-040",
+      "type": "contexte",
+      "contenu": "La réunion de 1975 à Asilomar sur la recherche en ADN recombinant a établi un précédent de gouvernance scientifique autonome, conduisant à l'émission de règles par les National Institutes of Health en 1976 qui catégorisaient les risques des expériences d'ADN recombinant et les alignaient sur les niveaux de biosécurité.",
+      "sources": [
+        {
+          "nom": "technologyreview.com",
+          "type_source": "source_secondaire",
+          "url": "https://www.technologyreview.com/2026/04/15/1135197/synthetic-mirror-life-microbes-kill-us-all/",
+          "date_acces": "2026-04-15T12:56:16+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:56:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Précédents historiques",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-041",
+      "type": "fait",
+      "contenu": "L'Union européenne a développé une application de vérification d'âge testée dans sept pays (France, Danemark, Grèce, Italie, Espagne, Chypre, Irlande) et déclarée techniquement opérationnelle selon la Commission européenne.",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Infrastructure numérique UE",
+      "acteurs": [
+        {
+          "nom": "Commission européenne",
+          "role": "sujet"
+        },
+        {
+          "nom": "Ursula von der Leyen",
+          "role": "source"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-042",
+      "type": "fait",
+      "contenu": "L'application de vérification d'âge est conçue pour s'interfacer avec les portefeuilles numériques nationaux et nécessite une accréditation UE structurée des solutions locales.",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Infrastructure numérique UE",
+      "acteurs": [
+        {
+          "nom": "Commission européenne",
+          "role": "sujet"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-043",
+      "type": "contexte",
+      "contenu": "L'initiative officielle porte sur la protection des mineurs face aux risques sanitaires liés aux réseaux sociaux. Son déploiement se fait progressivement à partir d'une phase de test dans sept États membres.",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Cadrage politique",
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-044",
+      "type": "point_de_vue",
+      "contenu": "« Notre application européenne de vérification d'âge est techniquement prête et sera bientôt disponible pour les citoyens »",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Positions institutionnelles",
+      "acteurs": [
+        {
+          "nom": "Ursula von der Leyen",
+          "role": "source",
+          "fonction": "Présidente de la Commission européenne"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-045",
+      "type": "point_de_vue",
+      "contenu": "« Interdire aux enfants les réseaux sociaux ne fonctionnera pas, car ils trouveront très rapidement des moyens de contourner et d'utiliser quand même les réseaux sociaux »",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Positions nationales",
+      "acteurs": [
+        {
+          "nom": "Kristina Kallas",
+          "role": "source",
+          "fonction": "Ministre de l'Éducation d'Estonie"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": "bit-2026-04-15-046",
+      "type": "point_de_vue",
+      "contenu": "« Nous avons besoin d'une approche structurée pour l'accréditation UE des solutions nationales »",
+      "sources": [
+        {
+          "nom": "politico.eu",
+          "type_source": "source_secondaire",
+          "url": "https://www.politico.eu/article/eu-says-age-verification-app-is-technically-ready/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+          "date_acces": "2026-04-15T12:56:21+00:00"
+        }
+      ],
+      "auteur": {
+        "type": "hybride",
+        "id": "fltr-001-extracteur",
+        "valide_par": "damien-va"
+      },
+      "horodatage_creation": "2026-04-15T10:55:00.000Z",
+      "geo": "monde",
+      "pilier": "technologie_numerique",
+      "user_need": {
+        "primaire": "give_me_perspective"
+      },
+      "statut": "brouillon",
+      "mots_cles": [],
+      "sous_theme": "Positions institutionnelles",
+      "acteurs": [
+        {
+          "nom": "Henna Virkkunen",
+          "role": "source",
+          "fonction": "Responsable technologie de l'UE"
+        }
+      ],
+      "version": 1
+    }
+  ]
+}
