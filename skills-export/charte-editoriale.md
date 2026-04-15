@@ -97,6 +97,7 @@ Avant toute analyse, suivre ces quatre étapes :
 
 **Règles absolues** :
 - NE JAMAIS présenter une proposition comme un fait accompli
+- NE JAMAIS présenter une hypothèse analytique d'un auteur comme un fait rapporté. Quand un auteur formule un scénario au conditionnel ("il pourrait", "il lui suffirait de", "if he wanted to", "imagine that"), l'accroche et le corps du post DOIVENT préserver le registre hypothétique. Question-test obligatoire : "L'auteur RAPPORTE-t-il un événement, ou ANALYSE-t-il une possibilité ?"
 - Les tribunes/perspectives peuvent être analysées mais le statut "prospectif" doit transparaître dans la formulation
 
 ---
@@ -343,6 +344,9 @@ Si une formule peut s'appliquer à n'importe quel sujet sans modification, elle 
 - **Dramatiques vagues** ("fatal", "catastrophique") : préciser pour QUI, à QUELLE échéance.
 - Jamais de "je" / "me" / "mon" dans les analyses.
 - Impact mesurable (eau, énergie, coût, émissions) : chiffre ou rien. Jamais d'adjectif hyperbolique ("astronomique", "colossal", "vertigineux") à la place d'une donnée.
+- **Cohérence des temps verbaux** : ne jamais mélanger présent et passé composé dans une même phrase. Événement passé = passé composé pour TOUS les verbes d'action. Question-test : "Cet événement a-t-il déjà eu lieu ?"
+- **Formules auto-référentielles** interdites : "n'est pas anodin", "ce n'est pas un hasard", "les chiffres parlent d'eux-mêmes". Ces formules prétendent que le contenu est significatif au lieu de montrer pourquoi.
+- **Tics structurels** interdits : "Ce qui frappe, c'est...", "Ce qui se joue ici dépasse...", "Ce qui se dessine...", "Ce qui se révèle..." et toute variante "Ce qui [verbe], c'est [Y]" utilisée comme ouverture d'analyse — entrer directement dans le sujet.
 
 ---
 

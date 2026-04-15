@@ -65,6 +65,24 @@ Le "slop" désigne les formulations creuses, génériques et artificielles typiq
 
 Ce qu'il faut faire à la place : entrer directement dans le sujet avec des faits, des noms, des mécanismes concrets.
 
+### Formules auto-référentielles
+
+- "N'est pas anodin"
+- "Ce n'est pas un hasard"
+- "Les chiffres parlent d'eux-mêmes"
+
+Ces formules prétendent que le contenu est significatif au lieu de montrer pourquoi. Supprimer et expliquer directement en quoi c'est significatif.
+
+### Tics structurels (haute sévérité)
+
+- "Ce qui frappe, c'est..."
+- "Ce qui se joue ici dépasse..."
+- "Ce qui se dessine..."
+- "Ce qui se révèle..."
+- Toute variante "Ce qui [verbe], c'est [Y]" utilisée comme ouverture d'analyse
+
+Entrer directement dans le sujet.
+
 ---
 
 ## Tournures interdites FR (haute sévérité)
@@ -76,7 +94,14 @@ Ce qu'il faut faire à la place : entrer directement dans le sujet avec des fait
 | "fascinant" | Enthousiasme artificiel, non-informatif | Décrire ce qui est notable et pourquoi |
 | "intéressant" | Jugement de valeur vide | Expliquer ce que ça change concrètement |
 | "remarquable" | Superlatif creux | Préciser ce qui distingue le cas |
+| "saisissant" | Dramatisation vague | Décrire le mécanisme concret |
+| "troublant" | Dramatisation vague | Nommer ce qui pose question et pourquoi |
+| "redoutable" | Superlatif creux | Préciser la menace concrète |
+| "spectaculaire" | Superlatif creux | Donner la mesure exacte |
 | "fait froid dans le dos" | Dramatisation vague | Nommer la conséquence précise |
+| "donne le vertige" | Dramatisation vague | Donner le chiffre exact |
+| "laisse songeur" | Jugement évasif | Expliquer ce qui pose question |
+| "le constat est brutal" | Dramatisation vague | Décrire le constat factuellement |
 | "glaçant" | Dramatisation vague | Idem |
 | "édifiant" | Jugement moral déguisé | Décrire le mécanisme |
 
@@ -96,6 +121,7 @@ Sans ces précisions, reformuler avec des termes neutres et factuels.
 | "astronomique" | Pas une mesure | Le chiffre exact ou rien |
 | "colossal" | Pas une mesure | Le chiffre exact ou rien |
 | "vertigineux" | Pas une mesure | Le chiffre exact ou rien |
+| "délirant" | Pas une mesure | Le chiffre exact ou rien |
 | "dérisoire" | Pas une mesure | Le chiffre exact ou rien |
 | "pharaonique" | Pas une mesure | Le chiffre exact ou rien |
 

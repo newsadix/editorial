@@ -90,6 +90,14 @@ Avant toute analyse, suivre ces étapes dans l'ordre :
 
 ---
 
+## Références académiques — aucune fabrication
+
+- **JAMAIS citer une étude, rapport ou enquête absente de l'article source.** Si le thème appelle un appui empirique que la source ne fournit pas, reformuler sans. Une référence fabriquée simule une autorité scientifique et détruit la crédibilité dès qu'un lecteur vérifie.
+- **JAMAIS injecter des faits, chiffres ou exemples provenant de connaissances générales.** Seuls les éléments présents dans le contenu source sont utilisables. Si un exemple extérieur renforcerait l'argument, le signaler en note ("Ce point mériterait un exemple documenté") plutôt que d'en inventer ou d'en importer un.
+- **Quand la source elle-même exagère ou est imprécise** (claim d'un interviewé, titre racoleur), ne pas amplifier. Attribuer le claim à son auteur et nuancer si nécessaire.
+
+---
+
 ## Discipline sur les sources
 
 - Texte court + lien vers média reconnu = source secondaire. Remonter à la source primaire.
@@ -133,6 +141,9 @@ Après rédaction du contenu, scanner pour :
 3. **Chiffre rond ou précis absent** de l'article source -> supprimer
 4. **Terme juridique/financier** non utilisé par la source -> remplacer par un terme neutre
 5. **Détail quantitatif inventé** dans une proposition prospective -> supprimer le chiffre
+6. **Hypothèse présentée comme fait** -> vérifier chaque affirmation de l'accroche et du corps : l'auteur source RAPPORTE-t-il un fait (passé, documenté) ou ANALYSE-t-il une possibilité (conditionnel, scénario) ? Indicateurs dans la source : "if", "could", "pourrait", "imagine that", "il suffirait de". Si la source est au conditionnel et le post à l'indicatif -> reformuler
+7. **Référence académique (étude, rapport, enquête)** absente du texte source -> supprimer. Aucune exception : si la source ne la cite pas, elle n'existe pas pour ce post
+8. **Fait, exemple ou statistique ne provenant pas de la source** (connaissance générale, autre article) -> supprimer ou signaler explicitement comme contexte externe non sourcé
 
 **Si un flag est détecté : corriger AVANT de livrer. Ne pas signaler et livrer quand même.**
 
