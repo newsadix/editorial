@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Template Newsadix",
+  "description": "Schéma de validation des fichiers de spécification de templates (Familles 1 et 3)",
+  "type": "object",
+  "required": ["id", "nom", "famille", "version", "date", "meta"],
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^TPL-[A-Z-]+$",
+      "description": "Identifiant unique du template"
+    },
+    "nom": {
+      "type": "string",
+      "description": "Nom lisible du template"
+    },
+    "famille": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "1 = Production, 2 = Contenu signé, 3 = Distribution"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version sémantique du template"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de dernière modification"
+    },
+
+    "meta": {
+      "type": "object",
+      "description": "Métadonnées du template",
+      "properties": {
+        "user_need_primaire": { "type": ["string", "null"] },
+        "user_need_secondaire": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "user_need": {
+          "type": ["string", "array", "null"],
+          "description": "Pour les templates F3 qui ont un format simplifié"
+        },
+        "mode_engagement": {
+          "type": ["string", "array"],
+          "description": "scroll, seek, subscribe, substantiate, study, sensemaking, socialise"
+        },
+        "signe": { "type": "boolean" },
+        "longueur_mots": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        },
+        "longueur_caracteres": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        },
+        "documentation": {
+          "type": "string",
+          "description": "Chemin vers le fichier de documentation markdown"
+        }
+      }
+    },
+
+    "supervision": {
+      "type": "object",
+      "description": "Niveau de supervision humaine par phase",
+      "properties": {
+        "phase_1": { "type": "string" },
+        "phase_2": { "type": "string" },
+        "phase_3": { "type": "string" }
+      }
+    },
+
+    "declencheur": {
+      "type": "object",
+      "description": "Conditions de déclenchement du template"
+    },
+
+    "composition": {
+      "type": "object",
+      "description": "Règles d'assemblage des bits (Famille 1)",
+      "properties": {
+        "bits_requis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["role", "obligatoire"],
+            "properties": {
+              "role": { "type": "string" },
+              "type": { "type": ["string", "array", "null"] },
+              "obligatoire": { "type": "boolean" },
+              "quantite": {
+                "type": "object",
+                "properties": {
+                  "min": { "type": "integer" },
+                  "max": { "type": "integer" }
+                }
+              },
+              "regles": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "genere": {
+                "type": "boolean",
+                "description": "true si ce contenu est généré (pas un bit existant)"
+              }
+            }
+          }
+        },
+        "bits_interdits": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Types de bits qui ne peuvent pas apparaître dans cet assemblage"
+        },
+        "total_bits": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        }
+      }
+    },
+
+    "structure_sortie": {
+      "type": "object",
+      "description": "Structure du texte ou format de sortie"
+    },
+
+    "controles_qualite": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "regle", "action_echec"],
+        "properties": {
+          "id": { "type": "string" },
+          "regle": { "type": "string" },
+          "action_echec": { "type": "string" }
+        }
+      }
+    },
+
+    "versionnement": {
+      "type": "object",
+      "description": "Règles de mise à jour post-publication"
+    },
+
+    "distribution": {
+      "type": ["array", "object"],
+      "description": "Canaux et formats de distribution"
+    },
+
+    "escalade": {
+      "type": "array",
+      "description": "Conditions de déclenchement de templates supérieurs",
+      "items": {
+        "type": "object",
+        "properties": {
+          "vers": { "type": "string" },
+          "condition": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+
+    "cycle_de_vie": {
+      "type": "object",
+      "description": "Règles de gel et d'archivage"
+    }
+  }
+}

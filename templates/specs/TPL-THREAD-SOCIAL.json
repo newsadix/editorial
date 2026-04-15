@@ -1,0 +1,126 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-THREAD-SOCIAL",
+  "nom": "Thread social",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": ["update_me", "educate_me"],
+    "mode_engagement": ["scroll", "seek"],
+    "signe": false,
+    "supervision": "automatique_jour_1",
+    "documentation": "editorial/templates/thread-social.md"
+  },
+
+  "declencheur": {
+    "condition": "Template source F1 a assez de matière pour un thread multi-posts",
+    "mapping_source": {
+      "TPL-ALERTE": { "genere_thread": false },
+      "TPL-DEPECHE-COURTE": { "genere_thread": "si_3_plus_faits", "posts": [3, 4] },
+      "TPL-DEPECHE-DEVELOPPEE": { "genere_thread": true, "posts": [4, 6] },
+      "TPL-DEPECHE-ANGLE": { "genere_thread": true, "posts": [5, 8] },
+      "TPL-DEPECHE-SYNTHESE": { "genere_thread": true, "posts": [5, 10] },
+      "TPL-DEPECHE-DATA": { "genere_thread": true, "posts": [3, 5] }
+    }
+  },
+
+  "structure_sortie": {
+    "invariante": {
+      "post_1": {
+        "role": "accroche",
+        "obligatoire": true,
+        "regles": [
+          "Le fait principal en 1-2 phrases",
+          "Doit fonctionner seul si le lecteur ne lit que celui-là",
+          "Pas de numérotation explicite (1/ 2/ etc.)"
+        ]
+      },
+      "posts_intermediaires": {
+        "role": "developpement",
+        "quantite": [2, 8],
+        "regles": [
+          "1 bit par post",
+          "Chaque post compréhensible isolément",
+          "Pas de suspense — ne pas couper une phrase entre deux posts",
+          "1 visuel max par post (carte sociale ou graphique data)"
+        ]
+      },
+      "post_final": {
+        "role": "fermeture",
+        "obligatoire": true,
+        "regles": [
+          "Source(s) + lien vers contenu complet",
+          "Formulation : 'Dépêche complète : [lien]'",
+          "Pas de CTA agressif"
+        ]
+      }
+    },
+    "mapping_par_source": {
+      "TPL-DEPECHE-DEVELOPPEE": [
+        { "post": 1, "bloc_source": "lead_factuel" },
+        { "post": 2, "bloc_source": "developpement_faits" },
+        { "post": 3, "bloc_source": "developpement_donnees" },
+        { "post": 4, "bloc_source": "contexte" },
+        { "post": 5, "bloc_source": "prochaines_etapes" },
+        { "post": 6, "bloc_source": "sources_lien" }
+      ],
+      "TPL-DEPECHE-ANGLE": [
+        { "post": 1, "bloc_source": "accroche_angle" },
+        { "post": 2, "bloc_source": "faits_selectionnes" },
+        { "post": 3, "bloc_source": "contexte_specifique" },
+        { "post": 4, "bloc_source": "pdv_1" },
+        { "post": 5, "bloc_source": "pdv_2" },
+        { "post": 6, "bloc_source": "ouverture" },
+        { "post": 7, "bloc_source": "sources_lien" }
+      ],
+      "TPL-DEPECHE-SYNTHESE": [
+        { "post": 1, "bloc_source": "chapeau" },
+        { "post": "2-N", "bloc_source": "chronologie_1_etape_par_post" },
+        { "post": "N+1", "bloc_source": "etat_des_lieux" },
+        { "post": "N+2", "bloc_source": "points_ouverts_sources_lien" }
+      ],
+      "TPL-DEPECHE-DATA": [
+        { "post": 1, "bloc_source": "chiffre_principal", "visuel": true },
+        { "post": 2, "bloc_source": "comparaison", "visuel": true },
+        { "post": 3, "bloc_source": "source_methodologie" },
+        { "post": 4, "bloc_source": "limites_lien_donnees_brutes" }
+      ]
+    }
+  },
+
+  "regles_par_post": {
+    "longueur_max_caracteres": {
+      "x_twitter": 280,
+      "threads": 500,
+      "bluesky": 300,
+      "linkedin": 700
+    },
+    "autonomie": "chaque post est une phrase complète",
+    "visuels": "1 max par post",
+    "hashtags": "0-2 par thread, post 1 ou post final uniquement",
+    "mentions": "uniquement si source = compte identifié sur la plateforme"
+  },
+
+  "controles_qualite": [
+    { "id": "longueur_par_post", "regle": "LENGTH(post) <= plateforme.longueur_max", "action_echec": "reecriture_automatique" },
+    { "id": "autonomie", "regle": "EACH post IS complete_sentence", "action_echec": "verification_syntaxique" },
+    { "id": "post_1_autonome", "regle": "post_1 WORKS AS standalone carte_sociale", "action_echec": "test_completude" },
+    { "id": "lien_final", "regle": "LAST_POST CONTAINS url_site", "action_echec": "ajout_automatique" },
+    { "id": "nombre_posts", "regle": "COUNT(posts) BETWEEN 3 AND 10", "action_echec": "condensation" },
+    { "id": "coherence_source", "regle": "ALL bits FROM assemblage_source", "action_echec": "verification" }
+  ],
+
+  "distribution": {
+    "delai_max_secondes": {
+      "x_twitter": 600,
+      "threads": 900,
+      "bluesky": 900,
+      "linkedin": 1800
+    },
+    "conditions": {
+      "linkedin": "seulement si pilier IN ['politique_institutions', 'economie_entreprises_travail', 'technologie_numerique', 'societe_dynamiques_sociales']"
+    }
+  }
+}

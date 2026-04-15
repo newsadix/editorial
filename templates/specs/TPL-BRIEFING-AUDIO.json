@@ -1,0 +1,125 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-BRIEFING-AUDIO",
+  "nom": "Briefing audio",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": "update_me",
+    "mode_engagement": ["subscribe", "scroll"],
+    "signe": false,
+    "supervision": "phase_1_ecoute_humaine_phase_3_automatique",
+    "documentation": "editorial/templates/briefing-audio.md"
+  },
+
+  "variantes": [
+    {
+      "id": "briefing_matinal",
+      "declencheur": "calendaire",
+      "heure": "06:30",
+      "duree_secondes": { "min": 180, "max": 300 },
+      "items": { "min": 4, "max": 6 }
+    },
+    {
+      "id": "flash",
+      "declencheur": "alerte_priorite_maximale",
+      "duree_secondes": { "min": 15, "max": 60 }
+    },
+    {
+      "id": "thematique",
+      "declencheur": "hebdomadaire_par_pilier",
+      "duree_secondes": { "min": 120, "max": 240 }
+    },
+    {
+      "id": "lecture_depeche",
+      "declencheur": "publication_depeche_developpee_angle_data",
+      "duree_secondes": { "min": 60, "max": 180 }
+    }
+  ],
+
+  "structure_sortie": {
+    "briefing_matinal": {
+      "segments": [
+        {
+          "id": "ouverture",
+          "duree_secondes": [5, 10],
+          "script": "Newsadix, {jour} {date}, {heure}. {N} sujets à retenir ce matin."
+        },
+        {
+          "id": "essentiel",
+          "duree_secondes": [120, 240],
+          "format_item": {
+            "transition": "{pilier}.",
+            "fait": "1-2 phrases (fait principal)",
+            "contexte": "1 phrase (si dépêche développée disponible)",
+            "pause": "0.5 sec entre items"
+          }
+        },
+        {
+          "id": "en_chiffres",
+          "duree_secondes": [30, 45],
+          "obligatoire": false,
+          "script": "En chiffres : {chiffre}. {explication}. Source : {source}."
+        },
+        {
+          "id": "fermeture",
+          "duree_secondes": [5, 10],
+          "script": "C'était le briefing Newsadix. Retrouvez les dépêches complètes sur newsadix.com."
+        }
+      ]
+    },
+    "flash": {
+      "script": "Newsadix, flash info. {fait_principal}. Source : {source}. Nous reviendrons sur ce sujet."
+    },
+    "lecture_depeche": {
+      "introduction": "Dépêche Newsadix, {pilier}, {date}.",
+      "corps": "texte_integral_du_template_source",
+      "fermeture": "Source ou sources : {sources}."
+    }
+  },
+
+  "tts": {
+    "voix": "unique_voix_newsadix",
+    "debit_mots_par_minute": [150, 160],
+    "pauses": {
+      "entre_items": 0.5,
+      "entre_segments": 1.0
+    },
+    "dictionnaire_prononciation": true,
+    "transparence": "voix identifiée comme synthétique (politique IA)"
+  },
+
+  "adaptations_ecrit_oral": [
+    { "ecrit": "parentheses (Source : BCE)", "oral": "'Source : BCE' en fin de segment" },
+    { "ecrit": "T1 2026", "oral": "premier trimestre 2026" },
+    { "ecrit": "7,3 %", "oral": "sept virgule trois pour cent" },
+    { "ecrit": "sigles nouveaux", "oral": "développés à la première occurrence" },
+    { "ecrit": "tableaux", "oral": "phrases comparatives" },
+    { "ecrit": "URLs", "oral": "supprimées" }
+  ],
+
+  "controles_qualite": [
+    { "id": "duree", "regle": "DURATION BETWEEN variante.duree.min AND variante.duree.max", "action_echec": "ajustement_nombre_items" },
+    { "id": "prononciation", "regle": "noms_propres IN dictionnaire", "action_echec": "ajout_dictionnaire_alerte" },
+    { "id": "qualite_audio", "regle": "NO glitch, coupure, artefact TTS", "action_echec": "regeneration_automatique" },
+    { "id": "transparence", "regle": "mention_voix_ia PRESENT", "action_echec": "verification_systematique" },
+    { "id": "coherence_newsletter", "regle": "memes_items_que_newsletter_meme_creneau", "action_echec": "verification_croisee" }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "mp3_aac", "delai": "immediat" },
+    { "canal": "podcast_rss", "format": "rss_feed", "plateformes": ["apple_podcasts", "spotify"], "delai_max_secondes": 900 },
+    { "canal": "reseaux_sociaux", "format": "extrait_30s_plus_visuel_anime", "delai_max_secondes": 1800 }
+  ],
+
+  "support_visuel_reseaux": {
+    "description": "L'audio seul ne fonctionne pas sur plateformes visuelles",
+    "format": {
+      "fond": "couleur_pilier_animee_wave_audio",
+      "texte": "faits_cles_syncro_audio",
+      "sous_titres": "systematiques"
+    }
+  }
+}

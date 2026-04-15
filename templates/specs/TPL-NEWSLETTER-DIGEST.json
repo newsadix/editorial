@@ -1,0 +1,116 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-NEWSLETTER-DIGEST",
+  "nom": "Newsletter digest",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": "update_me",
+    "mode_engagement": "subscribe",
+    "signe": false,
+    "supervision": "phase_1_relecture_phase_3_automatique",
+    "documentation": "editorial/templates/newsletter-digest.md"
+  },
+
+  "variantes": [
+    {
+      "id": "matinale",
+      "frequence": "quotidienne",
+      "heure_envoi": "07:00",
+      "items": { "min": 3, "max": 8 },
+      "contenu": "top_sujets_24h"
+    },
+    {
+      "id": "flash_midi",
+      "frequence": "quotidienne",
+      "heure_envoi": "12:30",
+      "items": { "min": 2, "max": 5 },
+      "contenu": "nouveautes_depuis_matinale"
+    },
+    {
+      "id": "hebdo",
+      "frequence": "hebdomadaire",
+      "jour": "dimanche",
+      "heure_envoi": "10:00",
+      "items": { "min": 8, "max": 12 },
+      "contenu": "synthese_semaine"
+    },
+    {
+      "id": "thematique",
+      "frequence": "variable",
+      "condition": "COUNT(depeches WHERE pilier == X AND horodatage > NOW() - 7d) >= 5",
+      "items": { "min": 3, "max": 8 },
+      "contenu": "mono_pilier"
+    }
+  ],
+
+  "structure_sortie": {
+    "blocs": [
+      {
+        "id": "en_tete",
+        "obligatoire": true,
+        "contenu": "Date + nombre d'articles + temps de lecture estimé"
+      },
+      {
+        "id": "essentiel",
+        "obligatoire": true,
+        "format_item": {
+          "pilier": "badge pilier",
+          "titre": "fait principal du bit source",
+          "resume": "1-2 phrases contexte minimal",
+          "lien": "URL dépêche complète"
+        }
+      },
+      {
+        "id": "en_chiffres",
+        "obligatoire": false,
+        "condition": "EXISTS depeches_data_recentes",
+        "format": "2-3 données clés avec source, chiffre en gros + 1 phrase"
+      },
+      {
+        "id": "a_suivre",
+        "obligatoire": false,
+        "format": "1-3 sujets avec prochaines étapes connues",
+        "source": "blocs prochaines_etapes des dépêches développées"
+      },
+      {
+        "id": "pied",
+        "obligatoire": true,
+        "contenu": "lien site + désabonnement 1 clic + mention légale"
+      }
+    ]
+  },
+
+  "algorithme_selection": {
+    "criteres": [
+      { "critere": "fraicheur", "poids": "eleve", "detail": "Dépêches les plus récentes d'abord" },
+      { "critere": "niveau_template", "poids": "moyen", "detail": "Développée > courte > alerte" },
+      { "critere": "diversite_piliers", "poids": "eleve", "detail": "Max 2 items du même pilier dans le top 5" },
+      { "critere": "engagement", "poids": "faible_au_debut", "detail": "Pondéré par métriques site/social quand disponibles" },
+      { "critere": "couverture_geo", "poids": "moyen", "detail": "Au moins 1 item international dans le top 5" }
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "nombre_items", "regle": "COUNT(items) BETWEEN variante.items.min AND variante.items.max", "action_echec": "selection_ou_alerte" },
+    { "id": "diversite_piliers", "regle": "MAX pilier_count IN top_5 <= 2", "action_echec": "reequilibrage_automatique" },
+    { "id": "longueur_totale", "regle": "matinale < 800 mots, hebdo < 1500 mots", "action_echec": "condensation" },
+    { "id": "liens_fonctionnels", "regle": "ALL item.lien RETURNS 200", "action_echec": "verification_automatique" },
+    { "id": "doublon_precedente", "regle": "NO item IN previous_newsletter", "action_echec": "exclusion_automatique" },
+    { "id": "heure_envoi", "regle": "envoi AT heure_prevue +/- 5min", "action_echec": "alerte_retard" }
+  ],
+
+  "distribution": {
+    "canal": "email",
+    "format": "html_responsive",
+    "provider": "a_definir",
+    "abonnement": {
+      "inscription": "email uniquement, pas de compte",
+      "choix_variantes": true,
+      "modification_preferences": true,
+      "desabonnement_1_clic": true
+    }
+  }
+}

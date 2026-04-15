@@ -1,0 +1,218 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DEPECHE-COURTE",
+  "nom": "Dépêche courte (Factuelle)",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "update_me",
+    "user_need_secondaire": [],
+    "signe": false,
+    "longueur_mots": { "min": 100, "max": 200 },
+    "documentation": "editorial/templates/depeche-courte.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_echantillonnage",
+    "phase_3": "automatique"
+  },
+
+  "declencheur": {
+    "operateur": "OU",
+    "conditions": [
+      {
+        "id": "escalade_alerte",
+        "description": "Une alerte a été publiée et du contexte minimal est disponible",
+        "regle": "EXISTS assemblage WHERE template == 'TPL-ALERTE' AND meme_sujet AND bits_complementaires_disponibles"
+      },
+      {
+        "id": "fait_sans_urgence",
+        "description": "Bit fait confirmé par 1+ source, sans critère de priorité alerte",
+        "regle": "bit.type == 'fait' AND COUNT(bit.sources) >= 1 AND NOT priorite_alerte"
+      },
+      {
+        "id": "accumulation_bits",
+        "description": "2+ bits fait ou donnée sur le même sujet sans dépêche existante",
+        "regle": "COUNT(bits WHERE relation.type == 'meme_sujet' AND type IN ('fait', 'donnee')) >= 2 AND NOT EXISTS assemblage.meme_sujet"
+      }
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_principal",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["L'événement central", "Phrase d'ouverture"]
+      },
+      {
+        "role": "fait_complementaire",
+        "type": "fait",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 2 },
+        "regles": ["Qui, où, comment"]
+      },
+      {
+        "role": "donnee",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 2 },
+        "regles": ["Chiffres clés"]
+      }
+    ],
+    "bits_interdits": ["contexte", "point_de_vue"],
+    "total_bits": { "min": 2, "max": 5 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "quoi",
+        "source": "fait_principal",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["Le fait principal = phrase 1 (pyramide inversée)"]
+      },
+      {
+        "id": "qui_quand_ou",
+        "source": "fait_complementaire",
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["Qui + Quand/Où"]
+      },
+      {
+        "id": "details",
+        "source": ["fait_complementaire", "donnee"],
+        "position": 3,
+        "obligatoire": false,
+        "regles": ["Comment / Détails factuels / Chiffres clés"]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Sources : {sources[].nom})",
+        "position": 99,
+        "obligatoire": true
+      }
+    ],
+    "patron": "{quoi}\n{qui_quand_ou}\n\n{details}\n\n(Sources : {sources})"
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "WORD_COUNT(texte_rendu) BETWEEN 100 AND 200",
+      "action_echec": "reecriture_si_hors_bornes"
+    },
+    {
+      "id": "pyramide_inversee",
+      "regle": "FIRST_SENTENCE(texte_rendu) == fait_principal.contenu",
+      "action_echec": "reordonnancement_automatique"
+    },
+    {
+      "id": "adjectifs_adverbes",
+      "regle": "NOT CONTAINS_ANY(texte_rendu, LISTE_QUALIFICATIFS_INTERDITS)",
+      "action_echec": "suppression_automatique"
+    },
+    {
+      "id": "conditionnel",
+      "regle": "NOT CONTAINS_VERBE_CONDITIONNEL(texte_rendu)",
+      "action_echec": "blocage_ou_reformulation"
+    },
+    {
+      "id": "source_presente",
+      "regle": "COUNT(assemblage.sources_uniques) >= 1",
+      "action_echec": "blocage_publication"
+    },
+    {
+      "id": "doublon",
+      "regle": "NOT EXISTS assemblage WHERE template == 'TPL-DEPECHE-COURTE' AND meme_sujet AND horodatage > NOW() - 4h",
+      "action_echec": "fusion_ou_mise_a_jour_existante"
+    },
+    {
+      "id": "coherence_alerte",
+      "regle": "IF escalade_depuis_alerte THEN fait_principal == alerte.fait_principal",
+      "action_echec": "verification_automatique"
+    }
+  ],
+
+  "versionnement": {
+    "active": true,
+    "duree_mise_a_jour_heures": 24,
+    "regles": [
+      {
+        "evenement": "nouveau_bit_met_a_jour",
+        "action": "mise_a_jour_contenu_et_incrementation_version"
+      },
+      {
+        "evenement": "nouveau_bit_meme_sujet",
+        "action": "ajout_si_pertinent_et_incrementation_version"
+      },
+      {
+        "evenement": "bit_corrige",
+        "action": "correction_propagee_mention_heure"
+      }
+    ],
+    "gel": "24h sans mise à jour → dépêche gelée"
+  },
+
+  "distribution": [
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 300,
+      "format": "texte_complet_metadonnees_pilier_geo"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 600,
+      "format": "version_tronquee_phrase_1_2_plus_lien"
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "condition": "prochain_envoi"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5
+    },
+    {
+      "canal": "audio",
+      "template_f3": "TPL-BRIEFING-AUDIO",
+      "delai_max_secondes": 900,
+      "format": "tts_lecture_automatique"
+    }
+  ],
+
+  "escalade": [
+    {
+      "vers": "TPL-DEPECHE-DEVELOPPEE",
+      "condition": "COUNT(bits WHERE type == 'contexte' AND relation.type == 'contextualise' AND cible IN assemblage.bits) >= 3",
+      "description": "3+ bits contexte disponibles"
+    },
+    {
+      "vers": "TPL-DEPECHE-DATA",
+      "condition": "COUNT(bits WHERE type == 'donnee' AND relation.type == 'meme_sujet') >= 5",
+      "description": "5+ bits donnée sur le même sujet"
+    },
+    {
+      "vers": "TPL-DEPECHE-SYNTHESE",
+      "condition": "COUNT(assemblages WHERE template == 'TPL-DEPECHE-COURTE' AND relation.type == 'meme_sujet' AND horodatage > NOW() - 48h) >= 3",
+      "description": "3+ dépêches courtes même sujet en < 48h"
+    },
+    {
+      "vers": "TPL-DEPECHE-ANGLE",
+      "condition": "EXISTS bit WHERE type == 'point_de_vue' AND relation.cible IN assemblage.bits",
+      "description": "1+ point de vue attribué disponible — candidat, évaluation requise"
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-ANALYSE",
+  "nom": "Analyse",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "give_me_perspective",
+    "user_need_secondaire": ["educate_me"],
+    "signe": true,
+    "longueur_mots": { "min": 1000, "max": 2500 },
+    "radar_transparence": "critique",
+    "documentation": "editorial/templates/analyse.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_systematique",
+    "phase_3": "validation_humaine_systematique",
+    "note": "L'analyse ne passe jamais en automatique"
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": [
+      "commande_chef_de_canal",
+      "proposition_journaliste"
+    ],
+    "signal_automatique": {
+      "condition": "COUNT(assemblages WHERE template == 'TPL-DEPECHE-ANGLE' AND meme_sujet AND pdv_divergents) >= 3",
+      "action": "suggestion_non_contraignante"
+    }
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_existant",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 4, "max": 10 },
+        "origine": "base_f1",
+        "regles": ["Socle factuel solide — plus exigeant que le décryptage"]
+      },
+      {
+        "role": "donnee",
+        "type": "donnee",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 6 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "contexte_existant",
+        "type": "contexte",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 4 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "contexte_original",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 5 },
+        "origine": "auteur",
+        "regles": ["Interprétation contextuelle"]
+      },
+      {
+        "role": "pdv_existant",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "origine": "base_f1_ou_collecte",
+        "regles": ["Perspectives contradictoires avec l'auteur"]
+      },
+      {
+        "role": "pdv_auteur",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 2 },
+        "origine": "auteur",
+        "regles": ["La grille de lecture assumée", "Explicitement distinguée des faits"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 12, "max": 30 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "these",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["2-4 phrases", "L'interprétation centrale", "Le lecteur sait dès le début ce que l'analyse défend"]
+      },
+      {
+        "id": "faits_qui_soutiennent",
+        "source": ["fait_existant", "donnee"],
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["3-6 phrases + données", "Étayent la thèse", "Tous issus de F1 ou sources vérifiables"]
+      },
+      {
+        "id": "faits_qui_nuancent",
+        "source": ["fait_existant", "donnee"],
+        "position": 3,
+        "obligatoire": true,
+        "regles": [
+          "3-6 phrases + données",
+          "Contredisent ou nuancent la thèse",
+          "OBLIGATOIRE — distingue l'analyse de la tribune",
+          "L'auteur joue fair play avec les éléments gênants",
+          "> 100 mots minimum"
+        ]
+      },
+      {
+        "id": "perspectives_contradictoires",
+        "source": "pdv_existant",
+        "position": 4,
+        "obligatoire": true,
+        "regles": [
+          "3-6 phrases",
+          "Au moins 2 PDV distincts de celui de l'auteur",
+          "Chaque PDV attribué",
+          "L'auteur ne les invalide pas — il les confronte"
+        ]
+      },
+      {
+        "id": "conclusion_ouverte",
+        "position": 5,
+        "obligatoire": true,
+        "regles": [
+          "2-4 phrases",
+          "Assume la thèse tout en reconnaissant ses limites",
+          "Pas de verdict final",
+          "Conditions qui confirmeraient/infirmeraient la thèse"
+        ]
+      },
+      {
+        "id": "signature_radar",
+        "position": 97,
+        "obligatoire": true
+      },
+      {
+        "id": "attribution",
+        "position": 99,
+        "obligatoire": true
+      }
+    ]
+  },
+
+  "radar_transparence": {
+    "niveau": "critique",
+    "variables": [
+      { "id": "expertise", "question": "Sur quoi l'auteur est-il légitime pour cette analyse ?" },
+      { "id": "position_connue", "question": "Position publique sur le sujet ?" },
+      { "id": "liens_interet", "question": "Liens avec les acteurs du sujet ?" },
+      { "id": "grille_de_lecture", "question": "Orientation idéologique, économique, politique assumée ?" }
+    ],
+    "note": "Le radar n'est pas punitif. C'est un acte de transparence."
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT BETWEEN 1000 AND 2500", "action_echec": "alerte" },
+    { "id": "structure_5_blocs", "regle": "ALL blocs identifiables", "action_echec": "alerte_qualite" },
+    { "id": "socle_factuel", "regle": "COUNT(fait_existant FROM base_f1) >= 4", "action_echec": "blocage" },
+    { "id": "bloc_nuance", "regle": "bloc.faits_qui_nuancent IS NOT EMPTY AND WORD_COUNT > 100", "action_echec": "blocage_analyse_partisane" },
+    { "id": "pdv_contradictoires", "regle": "COUNT(DISTINCT pdv_existant) >= 2", "action_echec": "blocage" },
+    { "id": "radar_complet", "regle": "ALL radar.variables RENSEIGNEES", "action_echec": "blocage" },
+    { "id": "distinction_fait_interpretation", "regle": "bits[type=fait] NOT CONTAIN interpretation", "action_echec": "revue_humaine" }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "texte_complet_blocs_distincts_radar", "delai": "des_validation" },
+    { "canal": "newsletter", "format": "these_plus_lien", "delai": "prochain_digest_ou_thematique" },
+    { "canal": "reseaux_sociaux", "format": "thread_these_faits_nuances_conclusion", "delai_max_secondes": 7200 },
+    { "canal": "linkedin", "format": "publication_longue", "delai_max_secondes": 14400 },
+    { "canal": "audio", "format": "lecture_integrale", "delai_max_secondes": 21600 },
+    { "canal": "flux_mcp", "note": "Bits F1 factuels uniquement — les PDV signés sont EXCLUS du flux MCP" }
+  ],
+
+  "cycle_de_vie": {
+    "mise_a_jour": false,
+    "description": "L'analyse n'est pas mise à jour. Si le sujet évolue, nouvelle analyse (potentiellement autre auteur, autre grille)."
+  }
+}

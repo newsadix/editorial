@@ -1,0 +1,227 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DEPECHE-DEVELOPPEE",
+  "nom": "Dépêche développée (Contextualisée)",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "update_me",
+    "user_need_secondaire": ["educate_me"],
+    "signe": false,
+    "longueur_mots": { "min": 300, "max": 600 },
+    "documentation": "editorial/templates/depeche-developpee.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_echantillonnage",
+    "phase_3": "automatique"
+  },
+
+  "declencheur": {
+    "operateur": "OU",
+    "conditions": [
+      {
+        "id": "escalade_depeche_courte",
+        "description": "Dépêche courte existante + 3 bits contexte disponibles",
+        "regle": "EXISTS assemblage WHERE template == 'TPL-DEPECHE-COURTE' AND meme_sujet AND COUNT(bits WHERE type == 'contexte' AND relation.type == 'contextualise') >= 3"
+      },
+      {
+        "id": "sujet_riche",
+        "description": "Fait avec contexte pré-existant dans la base (sujet suivi)",
+        "regle": "bit.type == 'fait' AND COUNT(bits_existants WHERE relation.type == 'contextualise' AND cible == bit.id) >= 3"
+      },
+      {
+        "id": "evenement_programme",
+        "description": "Événement programmé avec bits de contexte pré-chargés",
+        "regle": "calendrier.evenement_prevu AND bits_contexte_precharges >= 2"
+      }
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_principal",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 }
+      },
+      {
+        "role": "fait_complementaire",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 3 }
+      },
+      {
+        "role": "donnee",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 }
+      },
+      {
+        "role": "contexte",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "regles": ["Le 'pourquoi ça compte'", "Cadrage historique, comparatif ou thématique"]
+      }
+    ],
+    "bits_interdits": ["point_de_vue"],
+    "total_bits": { "min": 5, "max": 11 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "lead_factuel",
+        "source": "fait_principal",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Pyramide inversée"]
+      },
+      {
+        "id": "developpement",
+        "source": ["fait_complementaire", "donnee"],
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["2-4 phrases", "Ordre chronologique ou logique", "Données chiffrées si disponibles"]
+      },
+      {
+        "id": "contexte",
+        "source": "contexte",
+        "position": 3,
+        "obligatoire": true,
+        "regles": [
+          "2-4 phrases",
+          "Pourquoi cette information compte",
+          "Cadrage historique/comparatif/thématique",
+          "Relations utilisées : contextualise, même_sujet (précédents)",
+          "Contexte =/= analyse : situer, pas interpréter"
+        ]
+      },
+      {
+        "id": "prochaines_etapes",
+        "source": ["fait_complementaire"],
+        "position": 4,
+        "obligatoire": true,
+        "regles": [
+          "1-2 phrases",
+          "Uniquement des faits programmés (dates, échéances, procédures)",
+          "Zéro spéculation",
+          "Zéro conditionnel"
+        ]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Sources : {sources_uniques})",
+        "position": 99,
+        "obligatoire": true,
+        "regles": ["2+ sources distinctes"]
+      }
+    ]
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "WORD_COUNT(texte_rendu) BETWEEN 300 AND 600",
+      "action_echec": "reecriture_si_hors_bornes"
+    },
+    {
+      "id": "structure_4_blocs",
+      "regle": "ALL_BLOCS_PRESENT(['lead_factuel', 'developpement', 'contexte', 'prochaines_etapes'])",
+      "action_echec": "alerte_qualite"
+    },
+    {
+      "id": "bits_contexte_minimum",
+      "regle": "COUNT(assemblage.bits WHERE role == 'contexte') >= 2",
+      "action_echec": "blocage_pas_assez_de_matiere"
+    },
+    {
+      "id": "conditionnel_bloc_4",
+      "regle": "NOT CONTAINS_VERBE_CONDITIONNEL(bloc.prochaines_etapes)",
+      "action_echec": "reformulation_ou_suppression"
+    },
+    {
+      "id": "point_de_vue_detecte",
+      "regle": "NOT EXISTS bit WHERE type == 'point_de_vue' IN assemblage.bits",
+      "action_echec": "blocage_et_redirection_TPL_DEPECHE_ANGLE"
+    },
+    {
+      "id": "sources_multiples",
+      "regle": "COUNT(assemblage.sources_uniques) >= 2",
+      "action_echec": "alerte_si_inferieur_a_2"
+    },
+    {
+      "id": "coherence_amont",
+      "regle": "IF escalade THEN CONTAINS(assemblage.bits, depeche_courte_source.bits)",
+      "action_echec": "verification_automatique"
+    }
+  ],
+
+  "versionnement": {
+    "active": true,
+    "duree_mise_a_jour_heures": 48,
+    "gel": "48h sans mise à jour → dépêche gelée"
+  },
+
+  "distribution": [
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 1800,
+      "format": "texte_complet_4_blocs_distincts"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-THREAD-SOCIAL",
+      "delai_max_secondes": 2700,
+      "format": "thread_1_post_par_bloc"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 1800,
+      "format": "1_a_2_cartes"
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "format": "version_resumee_blocs_1_et_3"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5
+    },
+    {
+      "canal": "audio",
+      "template_f3": "TPL-BRIEFING-AUDIO",
+      "delai_max_secondes": 3600,
+      "format": "tts_lecture_integrale"
+    }
+  ],
+
+  "escalade": [
+    {
+      "vers": "TPL-DEPECHE-ANGLE",
+      "condition": "EXISTS bit WHERE type == 'point_de_vue' AND relation.cible IN assemblage.bits",
+      "description": "1+ point de vue attribué pertinent"
+    },
+    {
+      "vers": "TPL-DEPECHE-DATA",
+      "condition": "COUNT(bits WHERE type == 'donnee' AND relation.type == 'meme_sujet' AND structure IN ('serie_temporelle', 'comparatif')) >= 5",
+      "description": "5+ données structurées"
+    },
+    {
+      "vers": "TPL-DEPECHE-SYNTHESE",
+      "condition": "COUNT(assemblages WHERE template == 'TPL-DEPECHE-DEVELOPPEE' AND meme_sujet AND horodatage > NOW() - 72h) >= 3",
+      "description": "3+ dépêches développées même sujet en < 72h"
+    }
+  ]
+}

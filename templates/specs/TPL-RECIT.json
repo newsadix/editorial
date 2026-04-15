@@ -1,0 +1,122 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-RECIT",
+  "nom": "Récit / Reportage immersif",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "inspire_me",
+    "user_need_secondaire": ["keep_me_engaged"],
+    "signe": true,
+    "longueur_mots": { "min": 1500, "max": 4000 },
+    "radar_transparence": "obligatoire",
+    "multimedia": true,
+    "documentation": "editorial/templates/recit.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_systematique",
+    "phase_3": "validation_humaine_systematique"
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": ["commande_redaction", "proposition_journaliste"],
+    "prerequis": "terrain_ou_immersion"
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_documente",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 8 },
+        "origine": "base_f1_et_terrain"
+      },
+      {
+        "role": "observation_terrain",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 6 },
+        "origine": "auteur",
+        "regles": ["Scènes vécues ou observées directement", "Jamais de reconstitution imaginée"]
+      },
+      {
+        "role": "contexte",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "origine": "base_f1_et_auteur"
+      },
+      {
+        "role": "temoignage",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 6 },
+        "origine": "terrain",
+        "regles": ["Paroles des personnages", "Citations exactes"]
+      },
+      {
+        "role": "donnee",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "multimedia",
+        "type": null,
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 5 },
+        "origine": "terrain",
+        "regles": ["Photos, sons, vidéos du terrain"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 9, "max": 30 }
+  },
+
+  "structure_sortie": {
+    "format": "texte_narratif",
+    "note": "Structure NARRATIVE (scènes, personnages, tension, résolution), PAS pyramide inversée",
+    "blocs": [
+      { "id": "ouverture", "position": 1, "obligatoire": true, "regles": ["3-8 phrases", "Scène concrète, sensorielle", "Un lieu, un moment, un personnage", "Immersion immédiate"] },
+      { "id": "enjeu", "position": 2, "obligatoire": true, "regles": ["Transition scène → enjeu collectif", "Pont entre histoire individuelle et sujet de fond", "Ancrage dans les faits et données F1"] },
+      { "id": "developpement_narratif", "position": 3, "obligatoire": true, "regles": ["Alternance scènes / contexte / voix", "Tension narrative : obstacle, transformation", "Chaque scène observée ou documentée"] },
+      { "id": "resolution", "position": 4, "obligatoire": true, "regles": ["Pas nécessairement un happy end", "Ce qui a changé (ou pas)", "Retour au concret : un détail, un mot"] },
+      { "id": "encadre_factuel", "position": 5, "obligatoire": false, "regles": ["Faits et données clés extraits du récit", "Version synthétique pour le lecteur pressé", "Recommandé"] },
+      { "id": "signature_radar", "position": 97, "obligatoire": true },
+      { "id": "attribution", "position": 99, "obligatoire": true }
+    ]
+  },
+
+  "radar_transparence": {
+    "variables": [
+      { "id": "methode_observation", "question": "Comment l'auteur a-t-il observé les scènes ? (présent, reconstitution d'après témoignages, documents)" },
+      { "id": "relation_personnages", "question": "Lien préexistant avec les personnes racontées ?" },
+      { "id": "consentement", "question": "Les personnes dont la vie est racontée ont-elles donné leur consentement ?" },
+      { "id": "liens_interet", "question": "Liens avec les acteurs ou le lieu ?" }
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT BETWEEN 1500 AND 4000", "action_echec": "alerte" },
+    { "id": "scenes_terrain", "regle": "COUNT(observation_terrain) >= 2", "action_echec": "blocage_pas_un_recit" },
+    { "id": "personnages", "regle": "COUNT(temoignage WITH personnage_identifie) >= 1", "action_echec": "blocage" },
+    { "id": "faits_sources", "regle": "ALL fait_documente HAS source", "action_echec": "verification" },
+    { "id": "encadre_factuel", "regle": "bloc.encadre_factuel EXISTS", "action_echec": "alerte" },
+    { "id": "radar", "regle": "ALL variables RENSEIGNEES", "action_echec": "blocage" },
+    { "id": "zero_fiction", "regle": "ALL scenes ARE documented OR observed", "action_echec": "revue_humaine_approfondie" }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "long_read_immersif_multimedia", "delai": "des_validation" },
+    { "canal": "newsletter", "format": "teaser_narratif_ouverture_tronquee", "delai": "prochain_digest_ou_envoi_dedie" },
+    { "canal": "instagram", "format": "stories_scenes_visuelles_terrain", "delai_max_secondes": 21600 },
+    { "canal": "audio", "format": "podcast_narratif_adapte_pas_lu", "delai_max_secondes": 86400 }
+  ]
+}

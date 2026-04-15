@@ -1,0 +1,79 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-FLUX-MCP",
+  "nom": "Flux MCP / Agence",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": null,
+    "note": "Consommateurs machines, pas humains",
+    "format": "json_structure",
+    "signe": false,
+    "supervision": "automatique_jour_1",
+    "documentation": "editorial/templates/flux-mcp.md"
+  },
+
+  "declencheur": {
+    "description": "Tout changement dans la base de bits publiés alimente le flux",
+    "evenements": [
+      { "evenement": "nouveau_bit_publie", "action": "ajout_au_flux" },
+      { "evenement": "bit_mis_a_jour", "action": "mise_a_jour_flux_plus_notification" },
+      { "evenement": "nouvel_assemblage_f1", "action": "ajout_assemblage_au_flux" },
+      { "evenement": "bit_corrige", "action": "correction_flux_plus_flag_correction" }
+    ]
+  },
+
+  "api": {
+    "endpoints": [
+      { "path": "/api/bits", "methode": "GET", "description": "Flux de bits, du plus récent au plus ancien", "format": "json_pagine" },
+      { "path": "/api/bits/{id}", "methode": "GET", "description": "Un bit avec toutes ses relations", "format": "json" },
+      { "path": "/api/assemblages", "methode": "GET", "description": "Flux de dépêches assemblées", "format": "json_pagine" },
+      { "path": "/api/assemblages/{id}", "methode": "GET", "description": "Une dépêche avec ses bits constitutifs", "format": "json" },
+      { "path": "/api/flux", "methode": "GET", "description": "Flux temps réel", "format": "sse_ou_websocket" },
+      { "path": "/api/piliers/{pilier}", "methode": "GET", "description": "Bits et assemblages d'un pilier", "format": "json_pagine" }
+    ],
+    "filtres": [
+      { "parametre": "pilier", "valeurs": "enum piliers taxonomie", "exemple": "?pilier=politique_institutions" },
+      { "parametre": "geo", "valeurs": ["france", "france_monde", "monde"], "exemple": "?geo=france" },
+      { "parametre": "type", "valeurs": ["donnee", "fait", "contexte", "point_de_vue"], "exemple": "?type=fait" },
+      { "parametre": "depuis", "valeurs": "ISO 8601", "exemple": "?depuis=2026-04-14T00:00:00Z" },
+      { "parametre": "template", "valeurs": "enum templates F1", "exemple": "?template=TPL-ALERTE" }
+    ]
+  },
+
+  "consommateurs_cibles": [
+    { "type": "autres_medias", "usage": "Reprise de dépêches (modèle agence)" },
+    { "type": "agents_ia_externes", "usage": "Recomposition de bits" },
+    { "type": "agregateurs", "usage": "Google News, Apple News — indexation structurée" },
+    { "type": "applications_tierces", "usage": "Intégration flux actualité" },
+    { "type": "agent_conversationnel_newsadix", "usage": "Recomposition à la demande du citoyen" },
+    { "type": "chercheurs_academiques", "usage": "Analyse de corpus" }
+  ],
+
+  "regles": {
+    "temps_reel": "Le flux est alimenté dès qu'un bit ou assemblage est publié. Pas de batch.",
+    "complet": "Chaque bit inclut toutes ses métadonnées et relations.",
+    "versionne": "Chaque modification incrémente la version.",
+    "corrections_explicites": "Un bit corrigé porte correction.est_correction = true + correction.detail.",
+    "famille_2_exclue": "Le flux MCP ne contient que du contenu non signé (Famille 1)."
+  },
+
+  "conditions_acces": {
+    "statut": "a_definir",
+    "options": [
+      "acces_libre",
+      "acces_sur_inscription",
+      "acces_payant_usage_commercial",
+      "quotas_requetes"
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "conformite_json", "regle": "schema_validation ON each bit/assemblage", "action_echec": "blocage_publication_flux" },
+    { "id": "latence", "regle": "< 5 secondes entre publication et disponibilité", "action_echec": "alerte_performance" },
+    { "id": "disponibilite", "regle": "uptime >= 99.5%", "action_echec": "monitoring_alertes" },
+    { "id": "coherence", "regle": "ALL bit_id referenced IN assemblage EXISTS IN /api/bits", "action_echec": "verification_systematique" }
+  ]
+}

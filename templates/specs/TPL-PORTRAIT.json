@@ -1,0 +1,117 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-PORTRAIT",
+  "nom": "Portrait / Profil",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "keep_me_engaged",
+    "user_need_secondaire": ["give_me_perspective"],
+    "signe": true,
+    "longueur_mots": { "min": 800, "max": 2000 },
+    "radar_transparence": "obligatoire",
+    "documentation": "editorial/templates/portrait.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_systematique",
+    "phase_3": "validation_humaine_systematique"
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": ["commande_redaction", "proposition_journaliste"]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_biographique",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 8 },
+        "origine": "base_f1_et_recherche_auteur"
+      },
+      {
+        "role": "fait_actualite",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "origine": "base_f1",
+        "regles": ["Ancrage dans l'actualité couverte en F1"]
+      },
+      {
+        "role": "contexte_parcours",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "origine": "auteur"
+      },
+      {
+        "role": "citation_sujet",
+        "type": "point_de_vue",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 4 },
+        "origine": "interview_declarations"
+      },
+      {
+        "role": "regard_croise",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 3 },
+        "origine": "tiers",
+        "regles": ["Au moins 1 allié + 1 contradicteur", "Chaque regard attribué"]
+      },
+      {
+        "role": "donnee",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 },
+        "origine": "base_f1"
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 8, "max": 25 }
+  },
+
+  "structure_sortie": {
+    "format": "texte_narratif",
+    "blocs": [
+      { "id": "scene_ouverture", "position": 1, "obligatoire": true, "regles": ["3-5 phrases", "Un moment, un lieu, un geste", "Observation de première main si possible", "Pas de bio Wikipedia"] },
+      { "id": "parcours", "position": 2, "obligatoire": true, "regles": ["Étapes clés", "Sélection éditoriale, pas un CV", "Chaque fait sourcé"] },
+      { "id": "enjeu_actuel", "position": 3, "obligatoire": true, "regles": ["2-4 phrases", "Pourquoi ce portrait maintenant", "Lien avec l'actualité F1"] },
+      { "id": "regards_croises", "position": 4, "obligatoire": true, "regles": ["3-6 phrases", "2+ perspectives", "Incluant voix critiques", "Chaque regard attribué"] },
+      { "id": "scene_fermeture", "position": 5, "obligatoire": true, "regles": ["2-4 phrases", "Retour à l'humain", "Pas de conclusion moralisatrice"] },
+      { "id": "signature_radar", "position": 97, "obligatoire": true },
+      { "id": "attribution", "position": 99, "obligatoire": true }
+    ]
+  },
+
+  "radar_transparence": {
+    "variables": [
+      { "id": "relation_sujet", "question": "L'auteur connaît-il personnellement le sujet du portrait ?", "note": "Variable critique pour ce template" },
+      { "id": "expertise", "question": "Expertise sur le domaine du sujet ?" },
+      { "id": "liens_interet", "question": "Liens financiers, professionnels, personnels ?" }
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT BETWEEN 800 AND 2000", "action_echec": "alerte" },
+    { "id": "structure", "regle": "5 blocs identifiables", "action_echec": "alerte_qualite" },
+    { "id": "scene_ouverture", "regle": "bloc_1 IS narrative NOT biographical", "action_echec": "revue_humaine" },
+    { "id": "regards_croises", "regle": "COUNT(DISTINCT regard_croise) >= 2", "action_echec": "alerte_hagiographie" },
+    { "id": "faits_sources", "regle": "ALL fait_biographique HAS source", "action_echec": "verification" },
+    { "id": "radar_relation", "regle": "radar.relation_sujet IS RENSEIGNEE", "action_echec": "blocage" },
+    { "id": "ancrage_f1", "regle": "EXISTS fait_actualite FROM base_f1", "action_echec": "verification" }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "long_read", "delai": "des_validation" },
+    { "canal": "newsletter", "format": "teaser_scene_ouverture_tronquee_plus_lien", "delai": "prochain_digest" },
+    { "canal": "instagram", "format": "carrousel_scenes_parcours_regards", "delai_max_secondes": 14400 },
+    { "canal": "audio", "format": "podcast_narratif", "delai_max_secondes": 28800 }
+  ]
+}

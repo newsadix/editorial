@@ -1,0 +1,244 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DEPECHE-ANGLE",
+  "nom": "Dépêche d'angle",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "give_me_perspective",
+    "user_need_secondaire": ["educate_me"],
+    "signe": false,
+    "longueur_mots": { "min": 500, "max": 1000 },
+    "note": "Template le plus délicat de la Famille 1 — premier à intégrer des bits point_de_vue. Automatisation complète = dernière à être validée.",
+    "documentation": "editorial/templates/depeche-angle.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_allegee",
+    "phase_3": "semi_automatique"
+  },
+
+  "declencheur": {
+    "operateur": "ET",
+    "conditions": [
+      {
+        "id": "depeche_existante",
+        "description": "Une dépêche courte ou développée existe sur le sujet",
+        "regle": "EXISTS assemblage WHERE template IN ('TPL-DEPECHE-COURTE', 'TPL-DEPECHE-DEVELOPPEE') AND meme_sujet"
+      },
+      {
+        "id": "pdv_multiples",
+        "description": "Au moins 2 bits point_de_vue attribués disponibles",
+        "regle": "COUNT(bits WHERE type == 'point_de_vue' AND relation.cible IN assemblage.bits AND acteurs[0].nom IS NOT NULL) >= 2"
+      },
+      {
+        "id": "pdv_divers",
+        "description": "Les PDV sont contradictoires ou complémentaires, pas redondants",
+        "regle": "EXISTS relation WHERE type == 'contredit' BETWEEN pdv_bits OR NOT EXISTS relation WHERE type == 'meme_sujet' BETWEEN pdv_bits"
+      },
+      {
+        "id": "ancrage_factuel",
+        "description": "Suffisamment de bits fait et contexte pour ancrer les PDV",
+        "regle": "COUNT(bits WHERE type IN ('fait', 'contexte') AND relation.cible IN pdv_bits) >= 3"
+      }
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_principal",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Ancrage factuel", "Reformulé sous l'éclairage de l'angle"]
+      },
+      {
+        "role": "fait_selectionne",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "regles": ["Faits choisis selon l'angle, pas tous les faits"]
+      },
+      {
+        "role": "contexte_specifique",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 3 },
+        "regles": ["Cadrage orienté par l'angle"]
+      },
+      {
+        "role": "point_de_vue",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 4 },
+        "regles": [
+          "Toujours attribués : nom + fonction + citation ou paraphrase",
+          "Au moins 2 positions distinctes",
+          "Idéalement contradictoires",
+          "Pas de hiérarchisation (pas de 'mais' qui invalide l'un au profit de l'autre)"
+        ]
+      },
+      {
+        "role": "donnee_comparative",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 },
+        "regles": ["Chiffres qui étayent ou nuancent les PDV"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 7, "max": 15 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "accroche_angle",
+        "source": "fait_principal",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Entrée par l'angle, pas par le fait brut", "Le lecteur comprend dès la première phrase quel éclairage est proposé"]
+      },
+      {
+        "id": "faits_selectionnes",
+        "source": ["fait_selectionne", "donnee_comparative"],
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["3-5 phrases", "Les faits pertinents pour cet angle spécifique"]
+      },
+      {
+        "id": "contexte_specifique",
+        "source": "contexte_specifique",
+        "position": 3,
+        "obligatoire": true,
+        "regles": ["2-4 phrases", "Le cadre qui donne sens à l'angle", "Historique, comparaison, tendance"]
+      },
+      {
+        "id": "points_de_vue",
+        "source": "point_de_vue",
+        "position": 4,
+        "obligatoire": true,
+        "regles": [
+          "4-8 phrases",
+          "Chaque PDV explicitement attribué : 'Selon X, …', 'Pour Y, …'",
+          "Au moins 2 PDV distincts",
+          "Jamais de 'certains estiment que' ou 'les observateurs notent'",
+          "Pas de hiérarchisation entre PDV"
+        ]
+      },
+      {
+        "id": "ouverture",
+        "position": 5,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Ce qui reste incertain ou à venir", "Question ouverte ou prochaine échéance factuelle"]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Sources : {sources_uniques})",
+        "position": 99,
+        "obligatoire": true,
+        "regles": ["Inclut les sources des PDV"]
+      }
+    ]
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "WORD_COUNT(texte_rendu) BETWEEN 500 AND 1000",
+      "action_echec": "reecriture_si_hors_bornes"
+    },
+    {
+      "id": "structure_5_blocs",
+      "regle": "ALL_BLOCS_PRESENT(['accroche_angle', 'faits_selectionnes', 'contexte_specifique', 'points_de_vue', 'ouverture'])",
+      "action_echec": "alerte_qualite"
+    },
+    {
+      "id": "pdv_attribues",
+      "regle": "ALL(assemblage.bits WHERE type == 'point_de_vue').acteurs[0].nom IS NOT NULL",
+      "action_echec": "blocage_publication"
+    },
+    {
+      "id": "pdv_multiples",
+      "regle": "COUNT(DISTINCT assemblage.bits WHERE type == 'point_de_vue') >= 2",
+      "action_echec": "blocage_redirection_TPL_DEPECHE_DEVELOPPEE"
+    },
+    {
+      "id": "pdv_equilibres",
+      "regle": "NO pdv OCCUPIES > 60% OF bloc.points_de_vue",
+      "action_echec": "alerte_desequilibre"
+    },
+    {
+      "id": "faits_verifiables",
+      "regle": "ALL facts IN bloc.faits_selectionnes REFERENCE existing bit WHERE type IN ('fait', 'donnee')",
+      "action_echec": "verification_croisee"
+    },
+    {
+      "id": "conditionnel",
+      "regle": "VERBE_CONDITIONNEL only IN bloc.ouverture",
+      "action_echec": "verification_ciblee"
+    }
+  ],
+
+  "versionnement": {
+    "active": true,
+    "duree_mise_a_jour_heures": 72,
+    "regles": [
+      {
+        "evenement": "nouveau_pdv_significatif",
+        "action": "mise_a_jour_bloc_points_de_vue"
+      }
+    ],
+    "gel": "72h sans nouveau PDV ou nouveau template créé"
+  },
+
+  "distribution": [
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 3600,
+      "format": "texte_complet_pdv_visuellement_differencies"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 7200,
+      "format": "carrousel_1_card_par_bloc"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-THREAD-SOCIAL",
+      "delai_max_secondes": 7200,
+      "format": "5_a_8_posts"
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "format": "accroche_plus_pdv_cles"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5
+    }
+  ],
+
+  "escalade": [
+    {
+      "vers": "FAMILLE_2_SUGGESTION",
+      "type": "suggestion_non_automatique",
+      "conditions": [
+        { "condition": "angle_merite_traitement_de_fond", "cible": "Décryptage" },
+        { "condition": "engagement_fort", "cible": "Analyse" },
+        { "condition": "acteur_cle_disponible_interview", "cible": "Interview" }
+      ],
+      "description": "Dernière template F1. Au-delà = Famille 2, intervention humaine. Génère une suggestion pour la rédaction, pas un déclenchement automatique."
+    }
+  ]
+}

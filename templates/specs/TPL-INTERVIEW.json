@@ -1,0 +1,182 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-INTERVIEW",
+  "nom": "Interview / Conversation structurée",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "give_me_perspective",
+    "user_need_secondaire": ["connect_me"],
+    "signe": true,
+    "longueur_mots": { "min": 800, "max": 2500 },
+    "radar_transparence": "double_obligatoire",
+    "note": "Seul template avec deux radars : intervieweur + invité",
+    "documentation": "editorial/templates/interview.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_systematique",
+    "phase_3": "validation_humaine_systematique"
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": [
+      "acteur_cle_disponible",
+      "approfondissement_depeche_angle",
+      "commande_redaction"
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_contexte",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 5 },
+        "origine": "base_f1",
+        "regles": ["Ancrage dans l'actualité couverte"]
+      },
+      {
+        "role": "donnee_contexte",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "contexte",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 3 },
+        "origine": "base_f1_et_auteur",
+        "regles": ["Présentation de l'invité et du cadre"]
+      },
+      {
+        "role": "reponse_invite",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 5, "max": 15 },
+        "origine": "interview",
+        "regles": ["Le cœur du template", "Citations fidèles, éditées pour clarté mais pas déformées"]
+      },
+      {
+        "role": "verification_factuelle",
+        "type": ["fait", "donnee"],
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 5 },
+        "origine": "base_f1",
+        "regles": ["Fact-check intégré au texte", "Confirme ou nuance les affirmations de l'invité"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 8, "max": 25 }
+  },
+
+  "structure_sortie": {
+    "format": "question_reponse",
+    "blocs": [
+      {
+        "id": "presentation",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["2-4 phrases", "Qui est l'invité, pourquoi cette personne sur ce sujet", "Lien actualité F1"]
+      },
+      {
+        "id": "question_structurante",
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["La première question cadre l'échange", "Ouverte, pas binaire"]
+      },
+      {
+        "id": "echange",
+        "position": 3,
+        "obligatoire": true,
+        "regles": [
+          "Alternance Q/R",
+          "Q : courte, directe",
+          "R : fidèle, éditée pour clarté",
+          "Incises [Vérification] après affirmations vérifiables",
+          "Format : '[Vérification : le chiffre X est exact/inexact. Source.]'"
+        ]
+      },
+      {
+        "id": "points_desaccord",
+        "position": 4,
+        "obligatoire": false,
+        "regles": ["Si désaccord factuel", "Sources des deux côtés"]
+      },
+      {
+        "id": "fermeture",
+        "position": 5,
+        "obligatoire": true,
+        "regles": ["Question de conclusion", "Ouverte, tournée vers l'avenir"]
+      },
+      {
+        "id": "encadre_invite",
+        "position": 96,
+        "obligatoire": true,
+        "regles": ["Bio courte + radar de transparence de l'invité"]
+      },
+      {
+        "id": "signature_radar_intervieweur",
+        "position": 97,
+        "obligatoire": true
+      },
+      {
+        "id": "attribution",
+        "position": 99,
+        "obligatoire": true
+      }
+    ]
+  },
+
+  "radar_transparence": {
+    "double": true,
+    "intervieweur": {
+      "variables": [
+        { "id": "expertise", "question": "Maîtrise du sujet ?" },
+        { "id": "position_connue", "question": "Avis public exprimé sur le sujet ?" },
+        { "id": "relation_invite", "question": "Connaît-il/elle personnellement l'invité ?" }
+      ]
+    },
+    "invite": {
+      "variables": [
+        { "id": "expertise", "question": "Légitimité sur le sujet ?" },
+        { "id": "position_connue", "question": "Position publique ?" },
+        { "id": "liens_interet", "question": "Liens financiers, professionnels, politiques ?" },
+        { "id": "role_dans_sujet", "question": "Acteur, observateur, ou les deux ?" }
+      ],
+      "renseigne_par": "intervieweur (avec vérification)"
+    }
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT BETWEEN 800 AND 2500", "action_echec": "alerte" },
+    { "id": "format_qr", "regle": "STRUCTURE question/reponse identifiable", "action_echec": "alerte_qualite" },
+    { "id": "verifications", "regle": "COUNT(incises_verification) >= 1", "action_echec": "alerte_pas_de_factcheck" },
+    { "id": "encadre_invite", "regle": "encadre_invite WITH bio AND radar EXISTS", "action_echec": "blocage" },
+    { "id": "radar_intervieweur", "regle": "COMPLETE", "action_echec": "blocage" },
+    { "id": "radar_invite", "regle": "COMPLETE", "action_echec": "blocage" },
+    { "id": "ancrage_f1", "regle": "EXISTS fait_contexte FROM base_f1", "action_echec": "verification" },
+    { "id": "relecture_invite", "regle": "IF politique_editoriale THEN invite_a_valide_citations", "action_echec": "verification_process" }
+  ],
+
+  "variantes": [
+    { "id": "ecrite", "description": "Questions email, réponses écrites. Moins vivante, plus précise." },
+    { "id": "live", "description": "Conversation enregistrée (audio/vidéo), transcrite et éditée." },
+    { "id": "multi_invites", "description": "2+ invités, perspectives différentes. Gestion des interactions." }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "qr_avec_incises_factcheck_radars", "delai": "des_validation" },
+    { "canal": "newsletter", "format": "1_2_echanges_cles_plus_lien", "delai": "prochain_digest" },
+    { "canal": "reseaux_sociaux", "format": "extraits_video_audio_ou_cartes_citations", "delai_max_secondes": 14400 },
+    { "canal": "audio_video", "format": "integrale_ou_extraits_si_enregistree", "delai_max_secondes": 43200 },
+    { "canal": "flux_mcp", "note": "Bits factuels de vérification uniquement" }
+  ]
+}

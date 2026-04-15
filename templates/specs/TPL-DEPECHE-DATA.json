@@ -1,0 +1,255 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DEPECHE-DATA",
+  "nom": "Dépêche data (Factuelle chiffrée)",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "update_me",
+    "user_need_secondaire": ["educate_me"],
+    "signe": false,
+    "longueur_mots": { "min": 200, "max": 500 },
+    "automatisabilite": "maximale",
+    "documentation": "editorial/templates/depeche-data.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_echantillonnage",
+    "phase_3": "automatique"
+  },
+
+  "declencheur": {
+    "operateur": "OU",
+    "conditions": [
+      {
+        "id": "publication_officielle",
+        "description": "Un organisme publie des chiffres officiels",
+        "regle": "source.type_source IN ('donnees_publiques', 'document_officiel') AND calendrier.publication_prevue"
+      },
+      {
+        "id": "seuil_donnees",
+        "description": "5+ bits donnée même sujet permettant comparaison",
+        "regle": "COUNT(bits WHERE type == 'donnee' AND relation.type == 'meme_sujet') >= 5"
+      },
+      {
+        "id": "escalade_ratio_donnees",
+        "description": "Dépêche existante avec ratio bits donnée > 50%",
+        "regle": "EXISTS assemblage WHERE COUNT(bits[type='donnee']) / COUNT(bits) > 0.5"
+      },
+      {
+        "id": "calendrier_statistique",
+        "description": "Date connue de publication statistique",
+        "regle": "calendrier.type == 'publication_statistique' AND calendrier.date == TODAY"
+      }
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "donnee_principale",
+        "type": "donnee",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Le chiffre clé", "Ouverture de la dépêche"]
+      },
+      {
+        "role": "donnee_comparative",
+        "type": "donnee",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 5 },
+        "regles": ["Comparaison temporelle, géographique ou sectorielle"]
+      },
+      {
+        "role": "fait_interpretation_minimale",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 2 },
+        "regles": ["Ce que le chiffre dit factuellement : hausse, baisse, record", "Pas d'extrapolation"]
+      },
+      {
+        "role": "source_methodologique",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Qui produit le chiffre, quelle méthode, quelle périodicité"]
+      },
+      {
+        "role": "limite",
+        "type": "contexte",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 1 },
+        "regles": ["Ce que le chiffre ne dit pas", "Biais méthodologiques si documentés"]
+      }
+    ],
+    "bits_interdits": ["point_de_vue"],
+    "total_bits": { "min": 5, "max": 10 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "chiffre_principal",
+        "source": ["donnee_principale", "fait_interpretation_minimale"],
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Chiffre mis en évidence", "Variation par rapport à période précédente"]
+      },
+      {
+        "id": "comparaison",
+        "source": "donnee_comparative",
+        "position": 2,
+        "obligatoire": true,
+        "regles": [
+          "2-4 phrases ou tableau",
+          "Série temporelle OU comparaison géographique OU ventilation",
+          "Tableau si > 3 points de comparaison"
+        ],
+        "format_prefere": "tableau"
+      },
+      {
+        "id": "source_methodologie",
+        "source": "source_methodologique",
+        "position": 3,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Producteur + méthode + périodicité", "Lien vers source primaire"]
+      },
+      {
+        "id": "ce_que_ca_ne_dit_pas",
+        "source": "limite",
+        "position": 4,
+        "obligatoire": false,
+        "regles": ["1-2 phrases", "Limites connues de l'indicateur", "Différenciateur Newsadix"]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Source : {source.nom} — données brutes : {source.url})",
+        "position": 99,
+        "obligatoire": true
+      }
+    ]
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "WORD_COUNT(texte_rendu) BETWEEN 200 AND 500",
+      "action_echec": "ajustement_automatique"
+    },
+    {
+      "id": "donnee_principale_identifiee",
+      "regle": "bloc.chiffre_principal CONTAINS nombre",
+      "action_echec": "restructuration"
+    },
+    {
+      "id": "comparaison_presente",
+      "regle": "COUNT(donnee_comparative) >= 2",
+      "action_echec": "recherche_automatique_donnees_complementaires"
+    },
+    {
+      "id": "source_lien",
+      "regle": "EXISTS source.url",
+      "action_echec": "alerte_si_manquant"
+    },
+    {
+      "id": "methodologie_presente",
+      "regle": "bloc.source_methodologie IS NOT EMPTY",
+      "action_echec": "alerte_qualite"
+    },
+    {
+      "id": "coherence_numerique",
+      "regle": "VERIFY_ARITHMETIC(variations, pourcentages, totaux)",
+      "action_echec": "blocage_si_incoherence"
+    },
+    {
+      "id": "fraicheur",
+      "regle": "donnee_principale.source.date_acces >= source.derniere_publication",
+      "action_echec": "verification_aupres_source"
+    }
+  ],
+
+  "automatisation_avancee": {
+    "detection_publication": {
+      "description": "Monitoring des calendriers statistiques officiels",
+      "sources": ["INSEE", "Eurostat", "BCE", "BLS", "Ministère Intérieur", "Météo-France", "Fédérations sportives"]
+    },
+    "extraction_automatique": {
+      "description": "Parsing des communiqués de presse et fichiers de données"
+    },
+    "enrichissement": {
+      "description": "Ajout automatique de données historiques depuis la base de bits"
+    },
+    "verification_arithmetique": {
+      "description": "Contrôle automatisé des variations et pourcentages"
+    }
+  },
+
+  "sujets_recurrents": [
+    { "sujet": "Chômage France", "frequence": "trimestriel", "source": "INSEE" },
+    { "sujet": "Inflation zone euro", "frequence": "mensuel", "source": "Eurostat" },
+    { "sujet": "Taux directeur BCE", "frequence": "6_semaines", "source": "BCE" },
+    { "sujet": "PIB France", "frequence": "trimestriel", "source": "INSEE" },
+    { "sujet": "Résultats électoraux", "frequence": "ad_hoc", "source": "Ministère Intérieur" },
+    { "sujet": "Indices boursiers clôture", "frequence": "quotidien", "source": "Euronext" }
+  ],
+
+  "distribution": [
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 900,
+      "format": "texte_plus_tableau_interactif_plus_graphique"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 1800,
+      "format": "visuel_chiffre_principal_plus_variation"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-THREAD-SOCIAL",
+      "delai_max_secondes": 1800,
+      "format": "3_a_5_posts"
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "format": "mini_graphique"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5,
+      "format": "json_structure_avec_donnees_brutes"
+    }
+  ],
+
+  "escalade": [
+    {
+      "vers": "TPL-DEPECHE-COURTE",
+      "condition": "donnees_revelent_fait_politique_ou_social",
+      "description": "Angle non-data à développer"
+    },
+    {
+      "vers": "TPL-DEPECHE-ANGLE",
+      "condition": "EXISTS bits WHERE type == 'point_de_vue' AND relation.cible IN assemblage.bits",
+      "description": "Les données nourrissent un débat avec PDV existants"
+    },
+    {
+      "vers": "TPL-DEPECHE-SYNTHESE",
+      "condition": "COUNT(assemblages WHERE template == 'TPL-DEPECHE-DATA' AND meme_sujet AND horodatage > NOW() - 48h) >= 3",
+      "description": "Publications multiples même thème en < 48h"
+    }
+  ],
+
+  "cycle_de_vie": {
+    "versionnement": false,
+    "description": "Pas de mise à jour. Chaque nouvelle publication de données produit une nouvelle dépêche data. L'historique est dans le réseau de bits (relation met_a_jour)."
+  }
+}

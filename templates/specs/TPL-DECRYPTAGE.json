@@ -1,0 +1,171 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DECRYPTAGE",
+  "nom": "Décryptage",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "educate_me",
+    "user_need_secondaire": ["give_me_perspective"],
+    "signe": true,
+    "longueur_mots": { "min": 800, "max": 2000 },
+    "radar_transparence": "obligatoire",
+    "documentation": "editorial/templates/decryptage.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_systematique",
+    "phase_3": "validation_humaine_systematique"
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": [
+      "commande_chef_de_canal",
+      "proposition_journaliste",
+      "suggestion_automatique"
+    ],
+    "signal_automatique": {
+      "condition": "COUNT(bits WHERE meme_sujet) >= 10 AND NOT EXISTS assemblage WHERE template == 'TPL-DECRYPTAGE' AND meme_sujet",
+      "action": "suggestion_non_contraignante"
+    }
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_existant",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 8 },
+        "origine": "base_f1",
+        "regles": ["Réutilisation de bits déjà publiés en Famille 1"]
+      },
+      {
+        "role": "donnee_existante",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 5 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "contexte_existant",
+        "type": "contexte",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 3 },
+        "origine": "base_f1"
+      },
+      {
+        "role": "contexte_original",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 6 },
+        "origine": "auteur",
+        "regles": ["Mécanismes, chaînes causales, enjeux", "La valeur ajoutée signée"]
+      },
+      {
+        "role": "point_de_vue",
+        "type": "point_de_vue",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 2 },
+        "origine": "base_f1_ou_auteur",
+        "regles": ["Éclairage expert si pertinent", "Toujours attribué"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 6, "max": 20 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "question",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["1-2 phrases", "Formulée simplement, comme le lecteur la poserait"]
+      },
+      {
+        "id": "reponse_courte",
+        "position": 2,
+        "obligatoire": true,
+        "regles": ["2-3 phrases", "< 80 mots", "Le lecteur pressé s'arrête ici"]
+      },
+      {
+        "id": "couche_faits",
+        "source": "fait_existant",
+        "position": 3,
+        "obligatoire": true,
+        "regles": ["Ce qui s'est passé", "Rappel factuel ancré dans les dépêches F1"]
+      },
+      {
+        "id": "couche_mecanismes",
+        "source": "contexte_original",
+        "position": 4,
+        "obligatoire": true,
+        "regles": ["Comment ça fonctionne", "Rouages, règles du jeu, chaînes causales"]
+      },
+      {
+        "id": "couche_enjeux",
+        "source": "contexte_original",
+        "position": 5,
+        "obligatoire": true,
+        "regles": ["Pourquoi ça compte", "Conséquences directes et indirectes"]
+      },
+      {
+        "id": "ce_quon_ne_sait_pas",
+        "position": 6,
+        "obligatoire": true,
+        "regles": ["1-3 phrases", "Incertitudes honnêtement nommées", "Questions ouvertes"]
+      },
+      {
+        "id": "signature",
+        "position": 97,
+        "obligatoire": true,
+        "contenu": "Nom auteur + lien profil + radar de transparence"
+      },
+      {
+        "id": "attribution",
+        "position": 99,
+        "obligatoire": true
+      }
+    ]
+  },
+
+  "radar_transparence": {
+    "variables": [
+      { "id": "expertise_declaree", "question": "Expertise particulière sur ce sujet ?" },
+      { "id": "position_connue", "question": "Position publique exprimée sur ce sujet ?" },
+      { "id": "liens_interet", "question": "Liens avec les acteurs du sujet ?" }
+    ],
+    "si_aucun_biais": "Afficher : Aucun conflit d'intérêt identifié",
+    "lien_profil_complet": true
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT BETWEEN 800 AND 2000", "action_echec": "alerte" },
+    { "id": "structure", "regle": "ALL blocs identifiables", "action_echec": "alerte_qualite" },
+    { "id": "socle_f1", "regle": "COUNT(bits WHERE role == 'fait_existant' AND origine == 'base_f1') >= 3", "action_echec": "blocage" },
+    { "id": "valeur_ajoutee", "regle": "COUNT(bits WHERE role == 'contexte_original') >= 3", "action_echec": "blocage" },
+    { "id": "reponse_courte", "regle": "WORD_COUNT(bloc.reponse_courte) <= 80", "action_echec": "alerte" },
+    { "id": "incertitudes", "regle": "bloc.ce_quon_ne_sait_pas IS NOT EMPTY", "action_echec": "alerte" },
+    { "id": "radar", "regle": "auteur.radar_transparence IS COMPLETE", "action_echec": "blocage" },
+    { "id": "coherence_f1", "regle": "ALL fait_existant REFERENCES published bit", "action_echec": "verification_croisee" }
+  ],
+
+  "distribution": [
+    { "canal": "site_web", "format": "texte_complet_couches_distinctes_radar", "delai": "des_validation" },
+    { "canal": "newsletter", "format": "question_plus_reponse_courte_plus_lien", "delai": "prochain_digest" },
+    { "canal": "reseaux_sociaux", "template_f3": "TPL-CARTE-SOCIALE", "format": "carrousel_question_reponse_mecanismes", "delai_max_secondes": 7200 },
+    { "canal": "audio", "template_f3": "TPL-BRIEFING-AUDIO", "format": "lecture_integrale_adaptee_oral", "delai_max_secondes": 14400 },
+    { "canal": "flux_mcp", "template_f3": "TPL-FLUX-MCP", "format": "bits_f1_references_uniquement", "note": "Les bits contexte originaux signés ne sont PAS exposés dans le flux MCP" }
+  ],
+
+  "cycle_de_vie": {
+    "mise_a_jour": "Si évolution significative du sujet, sinon nouveau décryptage",
+    "archivage": "actif — bits restent navigables"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-PUSH",
+  "nom": "Push notification",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": "update_me",
+    "mode_engagement": "subscribe",
+    "longueur_caracteres": { "max": 100 },
+    "signe": false,
+    "supervision": "automatique_jour_1",
+    "documentation": "editorial/templates/push-notification.md"
+  },
+
+  "declencheur": {
+    "condition": "Réservé aux événements de haute priorité",
+    "sources_autorisees": [
+      {
+        "template": "TPL-ALERTE",
+        "condition": "critere_priorite_rempli == true"
+      },
+      {
+        "template": "TPL-DEPECHE-DATA",
+        "condition": "variation_significative == true"
+      }
+    ],
+    "sources_interdites": ["TPL-DEPECHE-COURTE", "TPL-DEPECHE-DEVELOPPEE", "TPL-DEPECHE-ANGLE", "TPL-DEPECHE-SYNTHESE"]
+  },
+
+  "limites_frequence": {
+    "max_par_jour": 5,
+    "delai_min_entre_deux_secondes": 1800,
+    "max_par_heure": 2,
+    "plage_horaire": { "debut": "07:00", "fin": "23:00", "timezone": "locale_utilisateur" },
+    "action_si_seuil_atteint": "file_attente_ou_absorption_newsletter_flash"
+  },
+
+  "structure_sortie": {
+    "format": "[{pilier}] {fait_principal}",
+    "max_caracteres": 100,
+    "exemples": [
+      "[Politique] Le Conseil constitutionnel invalide l'article 12 de la loi immigration.",
+      "[Économie] BCE : taux directeur relevé à 4,75 % (+25 pb).",
+      "[Monde] Séisme de magnitude 6.2 au large de Nice, ressenti sur la Côte d'Azur."
+    ]
+  },
+
+  "destination_dynamique": {
+    "description": "Le lien pointe toujours vers le contenu le plus complet disponible au moment du clic",
+    "hierarchie": [
+      { "priorite": 1, "cible": "depeche_developpee", "condition": "si_existe" },
+      { "priorite": 2, "cible": "depeche_courte", "condition": "si_existe" },
+      { "priorite": 3, "cible": "alerte", "condition": "fallback" }
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "LENGTH(texte) <= 100", "action_echec": "reecriture_automatique" },
+    { "id": "frequence", "regle": "RESPECT limites_frequence", "action_echec": "mise_en_file_attente" },
+    { "id": "plage_horaire", "regle": "TIME BETWEEN 07:00 AND 23:00 local", "action_echec": "report_lendemain_7h" },
+    { "id": "pertinence", "regle": "source.critere_priorite == true", "action_echec": "blocage_si_non_prioritaire" },
+    { "id": "destination", "regle": "lien POINTS TO existing contenu", "action_echec": "verification_avant_envoi" },
+    { "id": "doublon", "regle": "NOT EXISTS push WHERE meme_contenu AND horodatage > NOW() - 4h", "action_echec": "blocage" }
+  ],
+
+  "interdits": [
+    "Pas un teaser — le fait est complet dans la notification",
+    "Pas un outil de rétention — jamais de push pour ramener les utilisateurs",
+    "Pas un canal de promotion — jamais de push pour contenu sponsorisé"
+  ],
+
+  "distribution": [
+    { "canal": "app_native", "format": "notification_ios_android", "delai": "immediat" },
+    { "canal": "navigateur_web", "format": "web_push_api", "delai": "immediat" }
+  ]
+}

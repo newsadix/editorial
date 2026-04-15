@@ -1,0 +1,184 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-ALERTE",
+  "nom": "Alerte (Flash)",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "update_me",
+    "user_need_secondaire": [],
+    "signe": false,
+    "longueur_mots": { "min": 5, "max": 50 },
+    "longueur_caracteres": { "min": 20, "max": 280 },
+    "documentation": "editorial/templates/alerte.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_echantillonnage",
+    "phase_3": "automatique"
+  },
+
+  "declencheur": {
+    "operateur": "ET",
+    "conditions": [
+      {
+        "id": "nouveau_fait",
+        "description": "Un bit de type fait est créé par un agent de veille",
+        "regle": "bit.type == 'fait' AND bit.auteur.type == 'agent'"
+      },
+      {
+        "id": "nouveaute",
+        "description": "Pas de bit même_sujet avec horodatage < 2h",
+        "regle": "NOT EXISTS bit_existant WHERE relation.type == 'meme_sujet' AND bit_existant.horodatage_creation > NOW() - 2h"
+      },
+      {
+        "id": "source_confirmee",
+        "description": "Au moins 1 source primaire confirme le fait",
+        "regle": "bit.sources[].type_source IN ('source_primaire', 'document_officiel', 'agence_presse') AND COUNT(bit.sources) >= 1"
+      },
+      {
+        "id": "pilier_valide",
+        "description": "Le fait concerne un des 12 piliers",
+        "regle": "bit.pilier IS NOT NULL"
+      }
+    ],
+    "priorite": {
+      "description": "Au moins 1 critère de priorité requis, sinon redirection vers TPL-DEPECHE-COURTE",
+      "criteres": [
+        "decision_politique_majeure",
+        "evenement_securite",
+        "donnee_economique_cle",
+        "resultat_electoral",
+        "deces_figure_publique",
+        "evenement_sportif_majeur"
+      ],
+      "action_si_aucun": "REDIRECT TPL-DEPECHE-COURTE"
+    }
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_principal",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Contenu en 1 phrase", "Pas d'adjectif qualificatif"]
+      },
+      {
+        "role": "horodatage",
+        "type": "donnee",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Date/heure précise de l'événement"]
+      }
+    ],
+    "bits_interdits": ["contexte", "point_de_vue"],
+    "total_bits": { "min": 1, "max": 2 }
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "prefixe",
+        "contenu": "[ALERTE]",
+        "obligatoire": true
+      },
+      {
+        "id": "fait",
+        "source": "fait_principal",
+        "obligatoire": true,
+        "regles": ["1 phrase", "< 200 caractères"]
+      },
+      {
+        "id": "horodatage",
+        "source": "horodatage",
+        "obligatoire": false,
+        "regles": ["Si pertinent, inclure heure précise"]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Source : {source.nom})",
+        "obligatoire": true
+      }
+    ],
+    "patron": "[ALERTE] {fait}. {horodatage}. (Source : {source})"
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "LENGTH(texte_rendu) - LENGTH(attribution) <= 280",
+      "action_echec": "reecriture_automatique"
+    },
+    {
+      "id": "adjectifs",
+      "regle": "NOT CONTAINS_ANY(texte_rendu, LISTE_ADJECTIFS_QUALIFICATIFS)",
+      "action_echec": "suppression_et_alerte_humaine"
+    },
+    {
+      "id": "conditionnel",
+      "regle": "NOT CONTAINS_VERBE_CONDITIONNEL(texte_rendu)",
+      "action_echec": "blocage_publication"
+    },
+    {
+      "id": "source_presente",
+      "regle": "LENGTH(assemblage.bits[role=fait_principal].sources) >= 1",
+      "action_echec": "blocage_publication"
+    },
+    {
+      "id": "doublon",
+      "regle": "NOT EXISTS assemblage WHERE template == 'TPL-ALERTE' AND relation.type == 'meme_sujet' AND horodatage > NOW() - 2h",
+      "action_echec": "blocage_et_fusion"
+    }
+  ],
+
+  "distribution": [
+    {
+      "canal": "push_notification",
+      "template_f3": "TPL-PUSH",
+      "delai_max_secondes": 60,
+      "condition": "priorite_remplie == true"
+    },
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 60,
+      "format": "texte_complet_badge_alerte"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 180
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "condition": "prochain_envoi"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5
+    }
+  ],
+
+  "escalade": [
+    {
+      "vers": "TPL-DEPECHE-COURTE",
+      "condition": "TOUJOURS",
+      "delai": "immediat si bits contexte disponibles, sinon sous 15 min",
+      "description": "L'alerte déclenche automatiquement une dépêche courte"
+    }
+  ],
+
+  "cycle_de_vie": {
+    "modifiable_apres_publication": false,
+    "description": "L'alerte n'est jamais modifiée. Les mises à jour passent par la dépêche courte (relation met_a_jour)."
+  }
+}

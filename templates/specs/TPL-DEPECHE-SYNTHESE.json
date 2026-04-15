@@ -1,0 +1,230 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-DEPECHE-SYNTHESE",
+  "nom": "Dépêche de synthèse (Round-up)",
+  "famille": 1,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "update_me",
+    "user_need_secondaire": ["educate_me"],
+    "signe": false,
+    "longueur_mots": { "min": 400, "max": 800 },
+    "note": "Template de consolidation, pas de production primaire. Assemble des dépêches existantes.",
+    "documentation": "editorial/templates/depeche-synthese.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_systematique",
+    "phase_2": "validation_humaine_echantillonnage",
+    "phase_3": "automatique"
+  },
+
+  "declencheur": {
+    "operateur": "OU",
+    "conditions": [
+      {
+        "id": "seuil_accumulation_sujet",
+        "description": "3+ dépêches même_sujet en < 72h",
+        "regle": "COUNT(assemblages WHERE relation.type == 'meme_sujet' AND template IN ('TPL-DEPECHE-COURTE', 'TPL-DEPECHE-DEVELOPPEE') AND horodatage > NOW() - 72h) >= 3"
+      },
+      {
+        "id": "seuil_accumulation_acteur",
+        "description": "3+ dépêches même_acteur en < 7 jours",
+        "regle": "COUNT(assemblages WHERE relation.type == 'meme_acteur' AND horodatage > NOW() - 7d) >= 3"
+      },
+      {
+        "id": "calendaire_fin_journee",
+        "description": "Synthèse du jour, déclenchée à 19h",
+        "regle": "TIME == 19:00 AND COUNT(assemblages WHERE horodatage > TODAY_START) >= 5"
+      },
+      {
+        "id": "calendaire_fin_semaine",
+        "description": "Synthèse hebdomadaire, déclenchée le dimanche",
+        "regle": "DAY_OF_WEEK == SUNDAY AND COUNT(assemblages WHERE horodatage > THIS_WEEK_START) >= 10"
+      },
+      {
+        "id": "cloture_evenement",
+        "description": "Fin d'un événement multi-jours (sommet, procès, compétition)",
+        "regle": "evenement.statut == 'clos' AND COUNT(assemblages WHERE meme_sujet) >= 3"
+      }
+    ]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "chapeau_synthese",
+        "type": null,
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 1 },
+        "regles": ["Généré (pas un bit existant)", "Vue d'ensemble en 2-3 phrases", "Inclut la période couverte"],
+        "genere": true
+      },
+      {
+        "role": "fait_chronologique",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 3, "max": 8 },
+        "regles": ["Les faits clés ordonnés chronologiquement", "Proviennent des dépêches existantes", "Version la plus récente si met_a_jour existe"]
+      },
+      {
+        "role": "donnee_cumulative",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 4 },
+        "regles": ["Chiffres de bilan"]
+      },
+      {
+        "role": "contexte_cadrage",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 2 },
+        "regles": ["Rappel du cadre pour lecteur qui découvre le sujet"]
+      },
+      {
+        "role": "point_ouvert",
+        "type": ["fait", "contexte"],
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 2 },
+        "regles": ["Ce qui reste en suspens", "Prochaines échéances connues"]
+      }
+    ],
+    "bits_interdits": ["point_de_vue"],
+    "total_bits": { "min": 6, "max": 15 },
+    "regle_origine": "Tous les bits proviennent des dépêches existantes sauf le chapeau"
+  },
+
+  "structure_sortie": {
+    "format": "texte",
+    "blocs": [
+      {
+        "id": "chapeau",
+        "source": "chapeau_synthese",
+        "position": 1,
+        "obligatoire": true,
+        "regles": ["2-3 phrases", "Résumé global : que s'est-il passé au total ?", "Inclut la période couverte"]
+      },
+      {
+        "id": "chronologie",
+        "source": "fait_chronologique",
+        "position": 2,
+        "obligatoire": true,
+        "regles": [
+          "Paragraphes courts ou liste à puces",
+          "1 fait = 1-2 phrases avec date/heure",
+          "Ordre chronologique strict",
+          "Chaque fait renvoie au bit source"
+        ],
+        "format_prefere": "liste_chronologique"
+      },
+      {
+        "id": "etat_des_lieux",
+        "source": ["donnee_cumulative", "fait_chronologique"],
+        "position": 3,
+        "obligatoire": true,
+        "regles": ["2-3 phrases", "Où en est-on maintenant ?", "Données cumulatives si disponibles"]
+      },
+      {
+        "id": "points_ouverts",
+        "source": "point_ouvert",
+        "position": 4,
+        "obligatoire": true,
+        "regles": ["1-3 phrases", "Ce qui n'est pas résolu", "Prochaines échéances connues", "Questions factuelles sans réponse"]
+      },
+      {
+        "id": "attribution",
+        "contenu_template": "(Sources : {sources_agregees})",
+        "position": 99,
+        "obligatoire": true
+      }
+    ]
+  },
+
+  "controles_qualite": [
+    {
+      "id": "longueur",
+      "regle": "WORD_COUNT(texte_rendu) BETWEEN 400 AND 800",
+      "action_echec": "ajustement_automatique"
+    },
+    {
+      "id": "bits_sources",
+      "regle": "ALL bits EXCEPT chapeau REFERENCE existing bit",
+      "action_echec": "alerte_si_bit_orphelin"
+    },
+    {
+      "id": "doublons",
+      "regle": "NO fait REPEATED (vérification met_a_jour)",
+      "action_echec": "deduplication_automatique"
+    },
+    {
+      "id": "chronologie",
+      "regle": "fait_chronologique ORDERED BY horodatage_evenement ASC",
+      "action_echec": "reordonnancement"
+    },
+    {
+      "id": "fraicheur",
+      "regle": "ALL bits.horodatage_creation > NOW() - 7d",
+      "action_echec": "alerte_si_bit_ancien"
+    },
+    {
+      "id": "completude",
+      "regle": "ALL depeches WHERE meme_sujet AND horodatage IN periode ARE REPRESENTED",
+      "action_echec": "alerte_si_depeche_manquante"
+    }
+  ],
+
+  "declencheurs_recurrents": [
+    { "type": "synthese_du_jour", "frequence": "quotidienne", "heure": "19:00", "contenu": "Top 5-8 sujets du jour" },
+    { "type": "synthese_hebdo", "frequence": "hebdomadaire", "jour": "dimanche", "heure": "10:00", "contenu": "Sujets de la semaine" },
+    { "type": "synthese_evenement", "frequence": "ad_hoc", "condition": "cloture_evenement_multi_jours" },
+    { "type": "synthese_suivi", "frequence": "ad_hoc", "condition": "sujet_suivi_atteint_jalon" }
+  ],
+
+  "distribution": [
+    {
+      "canal": "site_web",
+      "template_f3": null,
+      "delai_max_secondes": 7200,
+      "format": "texte_complet_avec_frise_chronologique"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-THREAD-SOCIAL",
+      "delai_max_secondes": 10800,
+      "format": "thread_1_post_par_etape_cle"
+    },
+    {
+      "canal": "reseaux_sociaux",
+      "template_f3": "TPL-CARTE-SOCIALE",
+      "delai_max_secondes": 7200,
+      "format": "1_carte_chapeau_plus_carrousel"
+    },
+    {
+      "canal": "newsletter",
+      "template_f3": "TPL-NEWSLETTER-DIGEST",
+      "delai_max_secondes": null,
+      "format": "chapeau_plus_lien_chronologie"
+    },
+    {
+      "canal": "audio",
+      "template_f3": "TPL-BRIEFING-AUDIO",
+      "delai_max_secondes": 10800,
+      "format": "tts_chapeau_plus_etat_des_lieux"
+    },
+    {
+      "canal": "flux_mcp",
+      "template_f3": "TPL-FLUX-MCP",
+      "delai_max_secondes": 5,
+      "format": "json_graph_complet_bits_et_relations"
+    }
+  ],
+
+  "escalade": [],
+  "cycle_de_vie": {
+    "versionnement": true,
+    "enrichissement": "tant que le sujet est actif",
+    "gel": "sujet clos ou 7 jours sans nouveau bit"
+  }
+}

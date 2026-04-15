@@ -1,0 +1,137 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-ENQUETE",
+  "nom": "Enquête (Investigation)",
+  "famille": 2,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need_primaire": "educate_me",
+    "user_need_secondaire": ["give_me_perspective"],
+    "signe": true,
+    "longueur_mots": { "min": 2000, "max": null },
+    "radar_transparence": "obligatoire",
+    "serie_possible": true,
+    "documentation": "editorial/templates/enquete.md"
+  },
+
+  "supervision": {
+    "phase_1": "validation_humaine_renforcee",
+    "phase_2": "validation_humaine_renforcee",
+    "phase_3": "validation_humaine_renforcee",
+    "note": "Double validation obligatoire + relecture juridique si nécessaire. Ne passe JAMAIS en automatique."
+  },
+
+  "declencheur": {
+    "automatique": false,
+    "sources": ["proposition_journaliste_avec_dossier", "commande_redaction"]
+  },
+
+  "composition": {
+    "bits_requis": [
+      {
+        "role": "fait_exclusif",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 10 },
+        "origine": "auteur",
+        "regles": ["Faits INÉDITS produits par l'enquête", "SEUL template F2 qui produit des bits fait originaux"]
+      },
+      {
+        "role": "document_source",
+        "type": null,
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": null },
+        "origine": "collecte_auteur",
+        "regles": ["Nature, source, date, mode d'obtention identifiés", "C2PA si disponible"]
+      },
+      {
+        "role": "donnee_exclusive",
+        "type": "donnee",
+        "obligatoire": false,
+        "quantite": { "min": 0, "max": 10 },
+        "origine": "analyse_auteur"
+      },
+      {
+        "role": "contexte_institutionnel",
+        "type": "contexte",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 5 },
+        "origine": "base_f1_et_auteur"
+      },
+      {
+        "role": "fait_public",
+        "type": "fait",
+        "obligatoire": true,
+        "quantite": { "min": 2, "max": 6 },
+        "origine": "base_f1",
+        "regles": ["Ancrage dans l'existant connu"]
+      },
+      {
+        "role": "reaction",
+        "type": "point_de_vue",
+        "obligatoire": true,
+        "quantite": { "min": 1, "max": 3 },
+        "origine": "collecte_auteur",
+        "regles": ["Réponse des acteurs mis en cause", "Droit de réponse systématique"]
+      }
+    ],
+    "bits_interdits": [],
+    "total_bits": { "min": 8, "max": null }
+  },
+
+  "structure_sortie": {
+    "format": "texte_long",
+    "blocs": [
+      { "id": "revelation_principale", "position": 1, "obligatoire": true, "regles": ["3-5 phrases", "Le fait central inédit", "Factuel et sourcé"] },
+      { "id": "preuves_documentees", "position": 2, "obligatoire": true, "regles": ["Paragraphes + encadrés", "Nature, source, date, mode d'obtention de chaque preuve", "Lien vers documents si possible"] },
+      { "id": "contexte_systemique", "position": 3, "obligatoire": true, "regles": ["3-6 phrases", "Cadre institutionnel, juridique, historique", "Ce qui est normal vs. anormal"] },
+      { "id": "reactions", "position": 4, "obligatoire": true, "regles": ["3-6 phrases", "Droit de réponse respecté", "Si pas de réponse : mention explicite du silence"] },
+      { "id": "ce_qui_reste", "position": 5, "obligatoire": true, "regles": ["1-3 phrases", "Questions ouvertes", "Pistes pour la suite"] },
+      { "id": "methodologie", "position": 6, "obligatoire": true, "regles": ["Encadré", "Période, nombre de sources, type de documents, méthode", "Transparence sur les limites"] },
+      { "id": "signature_radar", "position": 97, "obligatoire": true },
+      { "id": "attribution_complete", "position": 99, "obligatoire": true }
+    ]
+  },
+
+  "radar_transparence": {
+    "variables": [
+      { "id": "expertise", "question": "Expertise sur le domaine de l'enquête ?" },
+      { "id": "liens_interet", "question": "Liens avec les acteurs mis en cause ?" },
+      { "id": "position_connue", "question": "Position publique sur le sujet ?" },
+      { "id": "financement", "question": "L'enquête a-t-elle été financée par un tiers ?" }
+    ]
+  },
+
+  "controles_qualite": [
+    { "id": "longueur", "regle": "WORD_COUNT >= 2000", "action_echec": "alerte" },
+    { "id": "faits_exclusifs", "regle": "COUNT(fait_exclusif FROM auteur) >= 2", "action_echec": "blocage_ce_nest_pas_une_enquete" },
+    { "id": "documents", "regle": "COUNT(document_source) >= 1", "action_echec": "blocage" },
+    { "id": "droit_reponse", "regle": "bloc.reactions IS NOT EMPTY AND (contient_reponse OR contient_mention_silence)", "action_echec": "blocage_publication" },
+    { "id": "methodologie", "regle": "bloc.methodologie IS NOT EMPTY", "action_echec": "blocage" },
+    { "id": "radar", "regle": "ALL variables RENSEIGNEES", "action_echec": "blocage" },
+    { "id": "double_validation", "regle": "COUNT(validateurs) >= 2", "action_echec": "blocage" }
+  ],
+
+  "distribution": {
+    "embargo": "Publication simultanée sur tous les canaux. Pas de fuite vers le flux MCP avant le site.",
+    "canaux": [
+      { "canal": "site_web", "format": "long_read_documents_integres_methodologie_radar", "delai": "des_validation" },
+      { "canal": "newsletter", "format": "alerte_speciale_enquete_newsadix", "delai": "simultane" },
+      { "canal": "reseaux_sociaux", "format": "thread_chronologique_revelation", "delai": "simultane" },
+      { "canal": "audio", "format": "resume_narre", "delai_max_secondes": 43200 },
+      { "canal": "flux_mcp", "format": "bits_factuels_exclusifs_uniquement", "delai": "apres_publication_site" }
+    ]
+  },
+
+  "serie": {
+    "possible": true,
+    "structure": [
+      { "episode": 1, "contenu": "Révélation principale" },
+      { "episode": 2, "contenu": "Contexte systémique approfondi" },
+      { "episode": 3, "contenu": "Réactions et conséquences" }
+    ],
+    "regle": "Chaque épisode est autonome mais relié (relation même_sujet)"
+  }
+}

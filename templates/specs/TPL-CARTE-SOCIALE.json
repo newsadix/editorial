@@ -1,0 +1,113 @@
+{
+  "$schema": "./template-schema.json",
+  "id": "TPL-CARTE-SOCIALE",
+  "nom": "Carte sociale (Social Card)",
+  "famille": 3,
+  "version": "0.1",
+  "date": "2026-04-14",
+
+  "meta": {
+    "user_need": "update_me",
+    "mode_engagement": "scroll",
+    "duree_attention_secondes": 2,
+    "signe": false,
+    "supervision": "automatique_jour_1",
+    "documentation": "editorial/templates/carte-sociale.md"
+  },
+
+  "declencheur": {
+    "description": "Toute publication d'un template Famille 1 génère au moins une carte sociale",
+    "mapping_source": {
+      "TPL-ALERTE": { "cartes": 1, "type": "fait" },
+      "TPL-DEPECHE-COURTE": { "cartes": 1, "type": "fait_plus_donnee" },
+      "TPL-DEPECHE-DEVELOPPEE": { "cartes": [1, 2], "type": "fait_ou_chiffre" },
+      "TPL-DEPECHE-ANGLE": { "cartes": [1, 2], "type": "accroche_ou_diptyque_pdv" },
+      "TPL-DEPECHE-SYNTHESE": { "cartes": 2, "type": "chapeau_plus_carrousel_chronologie" },
+      "TPL-DEPECHE-DATA": { "cartes": 2, "type": "chiffre_plus_graphique" }
+    }
+  },
+
+  "composition": {
+    "bits_par_carte": { "min": 1, "max": 3 },
+    "contenu": {
+      "texte_principal": {
+        "max_caracteres": 120,
+        "source": "fait_principal OU donnee_principale",
+        "obligatoire": true
+      },
+      "texte_secondaire": {
+        "max_caracteres": 80,
+        "source": "donnee OU fait_complementaire",
+        "obligatoire": false
+      },
+      "source": {
+        "format": "{source.nom}",
+        "obligatoire": true
+      },
+      "pilier": {
+        "source": "assemblage.pilier",
+        "obligatoire": true
+      }
+    }
+  },
+
+  "structure_visuelle": {
+    "carte_simple": {
+      "layout": [
+        { "zone": "haut", "contenu": "pilier", "style": "badge_couleur_pilier" },
+        { "zone": "centre", "contenu": "texte_principal", "style": "gros_texte_2_3_lignes_max" },
+        { "zone": "centre_bas", "contenu": "texte_secondaire", "style": "texte_plus_petit" },
+        { "zone": "bas", "contenu": "source + newsadix.com + logo", "style": "footer" }
+      ],
+      "regles_visuelles": {
+        "fond": "couleur_pilier",
+        "texte": "blanc_ou_noir_selon_contraste",
+        "typographie": "identique_partout",
+        "photo": false
+      }
+    },
+    "carrousel": {
+      "max_cartes": 6,
+      "carte_1": "chapeau_ou_chiffre_principal",
+      "cartes_2_n": "1_fait_ou_donnee_par_carte",
+      "carte_finale": "sources_plus_cta"
+    }
+  },
+
+  "adaptations_plateforme": [
+    { "plateforme": "instagram_feed", "ratio": "1:1", "resolution": "1080x1080" },
+    { "plateforme": "instagram_stories", "ratio": "9:16", "resolution": "1080x1920" },
+    { "plateforme": "tiktok", "ratio": "9:16", "resolution": "1080x1920" },
+    { "plateforme": "x_twitter", "ratio": "16:9", "resolution": "1200x675" },
+    { "plateforme": "threads", "ratio": "1:1", "resolution": "1080x1080" },
+    { "plateforme": "linkedin", "ratio": "1.91:1", "resolution": "1200x628" }
+  ],
+
+  "controles_qualite": [
+    { "id": "longueur_texte", "regle": "LENGTH(texte_principal) <= 120", "action_echec": "reecriture_automatique" },
+    { "id": "contraste", "regle": "CONTRAST_RATIO(texte, fond) >= 4.5", "action_echec": "ajustement_couleur" },
+    { "id": "pilier_couleur", "regle": "couleur == PALETTE[assemblage.pilier]", "action_echec": "correction_automatique" },
+    { "id": "source_presente", "regle": "source IS NOT NULL", "action_echec": "ajout_automatique" },
+    { "id": "ratio_image", "regle": "ratio == plateforme.ratio_attendu", "action_echec": "recadrage_automatique" },
+    { "id": "doublon", "regle": "NOT EXISTS carte WHERE meme_contenu AND horodatage > NOW() - 4h", "action_echec": "blocage" }
+  ],
+
+  "distribution": {
+    "frequence_max_par_jour": {
+      "instagram_feed": 6,
+      "instagram_stories": null,
+      "tiktok": 4,
+      "x_twitter": 10,
+      "threads": 6,
+      "linkedin": 2
+    },
+    "delai_max_secondes": {
+      "instagram_stories": 300,
+      "x_twitter": 300,
+      "instagram_feed": 600,
+      "threads": 600,
+      "tiktok": 900,
+      "linkedin": 1800
+    }
+  }
+}
