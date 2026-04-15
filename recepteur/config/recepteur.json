@@ -1,0 +1,5 @@
+{
+  "taux_rejet_alerte": 0.20,
+  "taux_rejet_suspension": 0.50,
+  "fournisseurs_autorises": ["fltr-001"]
+}

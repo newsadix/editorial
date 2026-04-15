@@ -1,0 +1,7 @@
+data/bits/
+data/index.json
+data/fournisseurs/
+inbox/
+processed/
+__pycache__/
+*.pyc
